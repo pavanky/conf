@@ -35,7 +35,7 @@ else
 fi
 
 # AccelerEyes configuration
-if [ -r .accelereyes ]; then . .accelereyes; fi
+if [ -r ~/.accelereyes ]; then . ~/.accelereyes; fi
 
 # PS1 configuration
-if [ -r .ps1 ]; then . .ps1; fi
+if [ -r ~/.ps1 ]; then . ~/.ps1; fi
