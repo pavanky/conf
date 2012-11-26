@@ -1,0 +1,37 @@
+[alias]
+  ci = commit
+  co = checkout
+  di = diff
+  st = status
+  ann = annotate
+  b = branch
+  l = log --date-order --graph --pretty='%h %C(red)%an%Creset %s %C(yellow)%ar %C(green)%d%Creset'
+  c = log --date-order         --pretty='%h %C(red)%an%Creset %s %C(yellow)%ar %C(green)%d%Creset'
+  f = fetch -pt --all
+
+[push]
+  default = current
+
+[diff]
+  renames = true
+
+[color]
+  ui = true
+[color "branch"]
+  current = cyan
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[user]
+	name = Pavan Yalamanchili
+	email = contact@pavanky.com
+
