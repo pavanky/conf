@@ -9,6 +9,10 @@ alias E='sudo emacs -nw'
 alias grep='grep --color'
 alias sudo='sudo '
 
+# Navigation
+alias ..='cd ..'
+alias -- -='cd -'
+
 # Arch Linux specific aliases
 if [ `grep Arch /etc/issue | wc -l` -gt 0 ]; then
     alias pacman='sudo pacman-color'
