@@ -15,6 +15,10 @@ if [ `grep Arch /etc/issue | wc -l` -gt 0 ]; then
     alias pacaur='pacaur --aur --noedit'
 fi
 
+# bind ctrl-r/s to up/down
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
 calc() { echo "$@" | bc -l; }
 note() { echo "$@" >> ~/Documents/notes; }
 
