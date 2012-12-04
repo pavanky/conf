@@ -40,6 +40,8 @@ export PATH=$PATH:$BINS
 if [ -r /usr/share/git ]; then
     . /usr/share/git/completion/git-completion.bash
     . /usr/share/git/git-prompt.sh
+elif [ -r /etc/bash_completion.d/git ]; then
+    . /etc/bash_completion.d/git
 else
     function __git_ps1() { true; }
 fi
