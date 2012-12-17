@@ -4,8 +4,8 @@
 # General
 alias ls='ls --color=auto'
 alias ll='ls -Al'
-alias e='emacs -nw'
-alias E='sudo emacs -nw'
+alias e='vim'
+alias E='sudo vim'
 alias grep='grep --color'
 alias sudo='sudo '
 
@@ -27,7 +27,7 @@ calc() { echo "$@" | bc -l; }
 note() { echo "$@" >> ~/Documents/notes; }
 
 # Editors
-export EDITOR='emacs -nw'
+export EDITOR=vim
 export SVN_EDITOR=EDITOR
 
 # Paths
