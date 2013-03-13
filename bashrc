@@ -51,3 +51,6 @@ if [ -r ~/.accelereyes ]; then . ~/.accelereyes; fi
 
 # PS1 configuration
 if [ -r ~/.ps1 ]; then . ~/.ps1; fi
+
+# Fix for steam
+export PULSE_RUNTIME_PATH=$XDG_RUNTIME_DIR/pulse
