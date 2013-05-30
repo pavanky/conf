@@ -15,7 +15,7 @@ alias -- -='cd -'
 
 # Arch Linux specific aliases
 if [ `grep Arch /etc/issue | wc -l` -gt 0 ]; then
-    alias pacman='sudo pacman-color'
+    alias pacman='sudo pacman'
     alias pacaur='pacaur --aur --noedit'
 fi
 
