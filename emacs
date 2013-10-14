@@ -14,8 +14,8 @@
 
 ;; Default configuration
 (setq
- ; Follow symlinks without issue
- vc-follow-symlinks t
+ ; show warning instead of following
+ vc-follow-symlinks nil
 
  ; Remove the new line character
  kill-whole-line t
