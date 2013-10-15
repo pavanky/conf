@@ -63,7 +63,7 @@
  kept-old-versions 5
 )
 
-;; indenting c and c++
+;; C and C++
 (defun my-c-mode-common-hook ()
   "BSD c-mode"
   (interactive)
@@ -78,6 +78,14 @@
 )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+(add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.mk$" . makefile-mode))
+(add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
+(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
