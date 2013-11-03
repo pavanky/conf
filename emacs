@@ -68,7 +68,18 @@
  delete-old-versions t
  kept-new-versions 5
  kept-old-versions 5
+
+ ; Compilation commands
+ compile-command "make -j4"
+ compilation-scroll-output t
+ compilation-read-command nil
+ compilation-ask-about-save nil
+ compilation-window-height nil
+ compilation-process-setup-function nil
 )
+
+(global-set-key "\C-cc" 'comment-region)
+(global-set-key "\C-c\C-c" 'compile)
 
 ;; C and C++
 (defun my-c-mode-common-hook ()
@@ -77,12 +88,38 @@
   (c-set-style "bsd")
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
-  (setq tab-stop-list `(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60))
-  (setq tab-width 4)
+  (which-func-mode t)
+  (setq
+   show-trailing-whitespace t
+   default-tab-width 4
+   tab-width 4
+   indent-tabs-mode nil)
+  (local-set-key "\C-cc" 'comment-region)
+  (local-set-key "\C-c\C-c" 'compile)
+  (local-set-key "\C-x\C-n" 'next-error)
+  (local-set-key "\C-x\C-p" 'previous-error)
 )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 (add-hook 'c++-mode-common-hook 'my-c-mode-common-hook)
+
+;; sh mode
+(defun my-sh-mode ()
+  "My shell mode settings."
+  (local-set-key "\C-c\C-c" 'compile)
+  (local-set-key "\C-cc" 'comment-region))
+(add-hook 'sh-mode-hook 'my-sh-mode)
+(add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
+
+;; Compile when using shortcut from compile buffer
+(defun my-compilation-mode ()
+  "My compilation-mode settings."
+  (local-set-key "\C-c\C-c" 'compile))
+
+;; Customize compile command when in makefile mode
+(defun my-makefile-mode ()
+  (define-key makefile-mode-map "\C-c\C-c" 'compile))
+(add-hook 'makefile-mode-hook 'my-makefile-mode)
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
@@ -91,6 +128,8 @@
 (add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
