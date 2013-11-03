@@ -50,9 +50,10 @@
 
  ; Scrolling
  scroll-step 1
- scroll-margin 0
  scroll-preserve-screen-position t
+ scroll-margin 0
  next-screen-context-lines 0
+ scroll-error-top-bottom t
 
  ; Case insensitive search
  case-fold-search t
