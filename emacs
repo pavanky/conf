@@ -78,6 +78,9 @@
  compilation-process-setup-function nil
 )
 
+; Enable delete selection mode
+(delete-selection-mode 1)
+
 (global-set-key "\C-cc" 'comment-region)
 (global-set-key "\C-c\C-c" 'compile)
 
@@ -129,7 +132,6 @@
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
