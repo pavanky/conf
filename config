@@ -1,8 +1,9 @@
 #!/bin/bash
 
 PWD=`pwd`
-rm -f ~/.bashrc ~/.screenrc ~/.ps1 ~/.gitconfig
+rm -f ~/.bashrc ~/.screenrc ~/.ps1 ~/.gitconfig ~/.emacs
 ln -s $PWD/bashrc ~/.bashrc
 ln -s $PWD/screenrc ~/.screenrc
 ln -s $PWD/ps1 ~/.ps1
 ln -s $PWD/gitconfig ~/.gitconfig
+ln -s $PWD/emacs ~/.emacs
