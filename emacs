@@ -83,9 +83,6 @@
 ; Enable which-func-mode
 (which-func-mode 1)
 
-(global-set-key "\C-cc" 'comment-region)
-(global-set-key "\C-c\C-c" 'compile)
-
 ;; C and C++
 (defun my-c-mode-common-hook ()
   "BSD c-mode"
@@ -98,32 +95,23 @@
    default-tab-width 4
    tab-width 4
    indent-tabs-mode nil)
-  (local-set-key "\C-cc" 'comment-region)
-  (local-set-key "\C-c\C-c" 'compile)
-  (local-set-key "\C-x\C-n" 'next-error)
-  (local-set-key "\C-x\C-p" 'previous-error)
 )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 (add-hook 'c++-mode-common-hook 'my-c-mode-common-hook)
 
 ;; sh mode
-(defun my-sh-mode ()
-  "My shell mode settings."
+(defun my-custom-bindings ()
+  "My custom bindings."
   (local-set-key "\C-c\C-c" 'compile)
-  (local-set-key "\C-cc" 'comment-region))
-(add-hook 'sh-mode-hook 'my-sh-mode)
-(add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
+  (local-set-key "\C-cc" 'comment-region)
+  (local-set-key "\C-x\C-n" 'next-error)
+  (local-set-key "\C-x\C-p" 'previous-error))
 
-;; Compile when using shortcut from compile buffer
-(defun my-compilation-mode ()
-  "My compilation-mode settings."
-  (local-set-key "\C-c\C-c" 'compile))
-
-;; Customize compile command when in makefile mode
-(defun my-makefile-mode ()
-  (define-key makefile-mode-map "\C-c\C-c" 'compile))
-(add-hook 'makefile-mode-hook 'my-makefile-mode)
+(add-hook 'c-mode-hook 'my-custom-bindings)
+(add-hook 'c++-mode-hook 'my-custom-bindings)
+(add-hook 'sh-mode-hook 'my-custom-bindings)
+(add-hook 'makefile-mode-hook 'my-custom-bindings)
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
@@ -133,6 +121,7 @@
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+(add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
