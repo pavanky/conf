@@ -100,19 +100,6 @@
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 (add-hook 'c++-mode-common-hook 'my-c-mode-common-hook)
 
-;; sh mode
-(defun my-custom-bindings ()
-  "My custom bindings."
-  (local-set-key "\C-c\C-c" 'compile)
-  (local-set-key "\C-cc" 'comment-region)
-  (local-set-key "\C-x\C-n" 'next-error)
-  (local-set-key "\C-x\C-p" 'previous-error))
-
-(add-hook 'c-mode-hook 'my-custom-bindings)
-(add-hook 'c++-mode-hook 'my-custom-bindings)
-(add-hook 'sh-mode-hook 'my-custom-bindings)
-(add-hook 'makefile-mode-hook 'my-custom-bindings)
-
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
@@ -125,3 +112,17 @@
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
+
+;; custom bindings
+(defun my-custom-bindings ()
+  "My custom bindings."
+  (local-set-key "\C-c\C-c" 'compile)
+  (local-set-key "\C-cc" 'comment-region)
+  (local-set-key "\C-x\C-n" 'next-error)
+  (local-set-key "\C-x\C-p" 'previous-error))
+
+(add-hook 'c-mode-hook 'my-custom-bindings)
+(add-hook 'c++-mode-hook 'my-custom-bindings)
+(add-hook 'sh-mode-hook 'my-custom-bindings)
+(add-hook 'makefile-mode-hook 'my-custom-bindings)
+(add-hook 'cmake-mode-hook 'my-custom-bindings)
