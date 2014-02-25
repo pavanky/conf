@@ -1,6 +1,6 @@
 (setq user-full-name "Pavan Yalamanchili")
  ; contains necessary .el files
-(add-to-list 'load-path "~/.emacs.d/elisp")
+(add-to-list 'load-path "~/.emacs.d/scripts")
 
 ;; Save real estate.
 (menu-bar-mode -1)
