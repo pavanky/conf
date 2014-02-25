@@ -84,8 +84,8 @@
 (which-func-mode 1)
 
 ;; C and C++
-(defun my-c-mode-common-hook ()
-  "BSD c-mode"
+(defun my-c-like-modes-common-hook ()
+  "Custom C mode hooks. BSD style braces."
   (interactive)
   (c-set-style "bsd")
   (setq c-basic-offset 4)
@@ -97,8 +97,10 @@
    indent-tabs-mode nil)
 )
 
-(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-(add-hook 'c++-mode-common-hook 'my-c-mode-common-hook)
+(add-hook 'c-modes-common-hook 'my-c-like-modes-common-hook)
+(add-hook 'c++-mode-common-hook 'my-c-like-modes-common-hook)
+(add-hook 'java-modes-common-hook 'my-c-like-modes-common-hook)
+
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
@@ -123,6 +125,7 @@
 
 (add-hook 'c-mode-hook 'my-custom-bindings)
 (add-hook 'c++-mode-hook 'my-custom-bindings)
+(add-hook 'java-mode-hook 'my-custom-bindings)
 (add-hook 'sh-mode-hook 'my-custom-bindings)
 (add-hook 'makefile-mode-hook 'my-custom-bindings)
 (add-hook 'cmake-mode-hook 'my-custom-bindings)
