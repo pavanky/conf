@@ -101,6 +101,9 @@
 (add-hook 'c++-mode-common-hook 'my-c-like-modes-common-hook)
 (add-hook 'java-modes-common-hook 'my-c-like-modes-common-hook)
 
+; Autoload elisp scripts
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
@@ -111,6 +114,9 @@
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 (add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
