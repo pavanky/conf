@@ -23,4 +23,3 @@ emacs_plugin ()
 # Get the plugins
 emacs_plugin markdown-mode http://jblevins.org/projects/markdown-mode/markdown-mode.el
 emacs_plugin go-mode       http://golang.org/misc/emacs/go-mode.el?m=text
-emacs_plugin go-mode-load  http://golang.org/misc/emacs/go-mode-load.el?m=text

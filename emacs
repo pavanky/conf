@@ -106,12 +106,15 @@
   "Major mode for editing Markdown files" t)
 
 ;; Go mode
-(add-to-list 'load-path "~/.emacs.d/scripts/go-mode-load.el" t)
-(require 'go-mode-load)
+(autoload 'go-mode "go-mode"
+  "Major mode for editing go language files" t)
+(autoload 'gofmt-before-save "go-mode"
+  "Run gofmt before saving" t)
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-to-list 'auto-mode-alist '("\\.mk$" . makefile-mode))
 (add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
