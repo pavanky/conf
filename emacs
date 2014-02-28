@@ -105,6 +105,10 @@
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
 
+;; Go mode
+(add-to-list 'load-path "~/.emacs.d/scripts/go-mode-load.el" t)
+(require 'go-mode-load)
+
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
