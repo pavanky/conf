@@ -13,4 +13,5 @@ if has('mouse')
 endif
 
 set backupdir=~/.vim/backup
+set dir=~/.vim/swap
 syntax on
