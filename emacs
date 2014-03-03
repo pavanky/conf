@@ -84,7 +84,7 @@
 (which-func-mode 1)
 
 ;; C and C++
-(defun my-c-like-modes-common-hook ()
+(defun my-c-mode-common-hook ()
   "Custom C mode hooks. BSD style braces."
   (interactive)
   (c-set-style "bsd")
@@ -97,9 +97,7 @@
    indent-tabs-mode nil)
 )
 
-(add-hook 'c-modes-common-hook 'my-c-like-modes-common-hook)
-(add-hook 'c++-mode-common-hook 'my-c-like-modes-common-hook)
-(add-hook 'java-modes-common-hook 'my-c-like-modes-common-hook)
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 ; Autoload elisp scripts
 (autoload 'markdown-mode "markdown-mode"
