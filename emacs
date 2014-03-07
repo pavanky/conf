@@ -141,6 +141,7 @@
 (add-hook 'c-mode-hook 'my-custom-bindings)
 (add-hook 'c++-mode-hook 'my-custom-bindings)
 (add-hook 'java-mode-hook 'my-custom-bindings)
+(add-hook 'f90-mode-hook 'my-custom-bindings)
 (add-hook 'emacs-lisp-mode-hook 'my-custom-bindings)
 (add-hook 'sh-mode-hook 'my-custom-bindings)
 (add-hook 'makefile-mode-hook 'my-custom-bindings)
