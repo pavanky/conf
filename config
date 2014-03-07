@@ -23,3 +23,7 @@ emacs_plugin ()
 # Get the plugins
 emacs_plugin markdown-mode http://jblevins.org/projects/markdown-mode/markdown-mode.el
 emacs_plugin go-mode       http://golang.org/misc/emacs/go-mode.el?m=text
+
+# Emacs speaks statistics
+rm -rf ~/.emacs.d/scripts/ess
+git clone https://github.com/emacs-ess/ESS.git ~/.emacs.d/scripts/ess

@@ -1,6 +1,7 @@
 (setq user-full-name "Pavan Yalamanchili")
  ; contains necessary .el files
 (add-to-list 'load-path "~/.emacs.d/scripts")
+(add-to-list 'load-path "~/.emacs.d/scripts/ess/lisp")
 
 ;; Save real estate.
 (menu-bar-mode -1)
@@ -108,6 +109,9 @@
   "Major mode for editing go language files" t)
 (autoload 'gofmt-before-save "go-mode"
   "Run gofmt before saving" t)
+
+; Statistics modes
+(load "ess-site")
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
