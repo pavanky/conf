@@ -34,7 +34,6 @@
  garbage-collection-messages nil
 
  ; No more empty lines and spaces
- show-trailing-whitespace t
  indicate-empty-lines t
  indicate-buffer-boundaries t
 
@@ -92,13 +91,23 @@
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
   (setq
-   show-trailing-whitespace t
    default-tab-width 4
    tab-width 4
    indent-tabs-mode nil)
 )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+;; Whitespace setting
+(defun my-whitespace-hook ()
+  "Show trailing whitespace."
+  (setq
+   show-trailing-whitespace t)
+)
+
+(add-hook 'f90-mode-hook 'my-whitespace-hook)
+(add-hook 'c-mode-common-hook 'my-whitespace-hook)
+(add-hook 'go-mode-hook 'my-whitespace-hook)
 
 ; Autoload elisp scripts
 (autoload 'markdown-mode "markdown-mode"
