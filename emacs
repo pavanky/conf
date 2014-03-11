@@ -2,6 +2,7 @@
  ; contains necessary .el files
 (add-to-list 'load-path "~/.emacs.d/scripts")
 (add-to-list 'load-path "~/.emacs.d/scripts/ess/lisp")
+(add-to-list 'load-path "~/.emacs.d/scripts/jabber")
 
 ;; Save real estate.
 (menu-bar-mode -1)
@@ -155,3 +156,7 @@
 (add-hook 'sh-mode-hook 'my-custom-bindings)
 (add-hook 'makefile-mode-hook 'my-custom-bindings)
 (add-hook 'cmake-mode-hook 'my-custom-bindings)
+
+;; Application modes
+; Jabber mode
+(require 'jabber)
