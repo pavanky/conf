@@ -1,13 +1,26 @@
 #!/bin/bash
 
-# Create symbolic links from config files
-PWD=`pwd`
-rm -f ~/.bashrc ~/.screenrc ~/.ps1 ~/.gitconfig ~/.emacs
-ln -s $PWD/bashrc ~/.bashrc
-ln -s $PWD/screenrc ~/.screenrc
-ln -s $PWD/ps1 ~/.ps1
-ln -s $PWD/gitconfig ~/.gitconfig
-ln -s $PWD/emacs ~/.emacs
-ln -s $PWD/vimrc ~/.vimrc
+create()
+{
+    root_dir=$1
+    shift
 
-`dirname`/emacs_plugins ~/.emacs.d/scripts
+    backup_dir=$root_dir/backups/`date +%Y-%m-%d-%H-%M-%S`
+    mkdir -p $backup_dir
+
+    for cfg in $@
+    do
+        cp ~/.$cfg $backup_dir/$cfg 2>/dev/null
+        rm -f ~/.$cfg
+        ln -s $root_dir/$cfg ~/.$cfg
+    done
+}
+
+# use this instead of readlink to make it not dependent on linux
+root_dir=`echo $(cd $(dirname "$1") && pwd -P)/$(basename "$1")`
+
+# Create symbolic links from config files
+create $root_dir bashrc screenrc ps1 gitconfig emacs
+
+# Download emacs plugins
+$root_dir/emacs_plugins ~/.emacs.d/scripts
