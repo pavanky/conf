@@ -1,0 +1,17 @@
+#!/bin/bash
+
+emacs_scripts_dir=${1-~/.emacs.d/scripts/}
+
+# Create emacs plugins directory
+mkdir -p $emacs_scripts_dir
+cd $emacs_scripts_dir
+
+# Remove existing plugins
+rm -rf markdown-mode.el go-mode.el ess jabber
+
+# Get latest plugins
+wget -O markdown-mode.el http://jblevins.org/projects/markdown-mode/markdown-mode.el
+wget -O go-mode.el       http://golang.org/misc/emacs/go-mode.el?m=text
+
+git clone https://github.com/emacs-ess/ESS.git ~/.emacs.d/scripts/ess
+git clone git://git.code.sf.net/p/emacs-jabber/git ~/.emacs.d/scripts/jabber

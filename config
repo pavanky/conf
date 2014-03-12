@@ -10,22 +10,4 @@ ln -s $PWD/gitconfig ~/.gitconfig
 ln -s $PWD/emacs ~/.emacs
 ln -s $PWD/vimrc ~/.vimrc
 
-# Create emacs plugins directory
-mkdir -p ~/.emacs.d/scripts
-
-emacs_plugin ()
-{
-    mode_name=$1.el
-    mode_web_addr=$2
-    wget -O ~/.emacs.d/scripts/$mode_name $mode_web_addr
-}
-
-# Get the plugins
-cd ~/.emacs.d/scripts
-rm -rf markdown-mode.el go-mode.el ess jabber
-
-wget -O markdown-mode.el http://jblevins.org/projects/markdown-mode/markdown-mode.el
-wget -O go-mode.el       http://golang.org/misc/emacs/go-mode.el?m=text
-
-git clone https://github.com/emacs-ess/ESS.git ~/.emacs.d/scripts/ess
-git clone git://git.code.sf.net/p/emacs-jabber/git ~/.emacs.d/scripts/jabber
+`dirname`/emacs_plugins ~/.emacs.d/scripts
