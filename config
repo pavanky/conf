@@ -21,13 +21,11 @@ emacs_plugin ()
 }
 
 # Get the plugins
-emacs_plugin markdown-mode http://jblevins.org/projects/markdown-mode/markdown-mode.el
-emacs_plugin go-mode       http://golang.org/misc/emacs/go-mode.el?m=text
+cd ~/.emacs.d/scripts
+rm -rf markdown-mode.el go-mode.el ess jabber
 
-# Emacs speaks statistics
-rm -rf ~/.emacs.d/scripts/ess
+wget -O markdown-mode.el http://jblevins.org/projects/markdown-mode/markdown-mode.el
+wget -O go-mode.el       http://golang.org/misc/emacs/go-mode.el?m=text
+
 git clone https://github.com/emacs-ess/ESS.git ~/.emacs.d/scripts/ess
-
-# Emacs jabber
-rm -rf ~/.emacs.d/scripts/jabber
 git clone git://git.code.sf.net/p/emacs-jabber/git ~/.emacs.d/scripts/jabber
