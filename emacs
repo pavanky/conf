@@ -9,7 +9,7 @@
 ;; Customizing modeline colors
 (custom-set-faces
  ; Current window
- '(mode-line ((t (:foreground "blue"))))
+ '(mode-line ((t (:foreground "white"))))
  ; Have no idea what this does
  ;'(mode-line-highlight ((t (:foreground "white"))))
  ; inactive window
@@ -80,6 +80,8 @@
 
 ; Enable delete selection mode
 (delete-selection-mode 1)
+; Enable which-func-mode
+(which-func-mode 1)
 
 (global-set-key "\C-cc" 'comment-region)
 (global-set-key "\C-c\C-c" 'compile)
@@ -91,7 +93,6 @@
   (c-set-style "bsd")
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
-  (which-func-mode t)
   (setq
    show-trailing-whitespace t
    default-tab-width 4
