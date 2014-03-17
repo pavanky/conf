@@ -1,6 +1,8 @@
 (setq user-full-name "Pavan Yalamanchili")
  ; contains necessary .el files
-(add-to-list 'load-path "~/.emacs.d/elisp")
+(add-to-list 'load-path "~/.emacs.d/scripts")
+(add-to-list 'load-path "~/.emacs.d/scripts/ess/lisp")
+(add-to-list 'load-path "~/.emacs.d/scripts/jabber")
 
 ;; Save real estate.
 (menu-bar-mode -1)
@@ -33,7 +35,6 @@
  garbage-collection-messages nil
 
  ; No more empty lines and spaces
- show-trailing-whitespace t
  indicate-empty-lines t
  indicate-buffer-boundaries t
 
@@ -83,56 +84,80 @@
 ; Enable which-func-mode
 (which-func-mode 1)
 
-(global-set-key "\C-cc" 'comment-region)
-(global-set-key "\C-c\C-c" 'compile)
-
 ;; C and C++
 (defun my-c-mode-common-hook ()
-  "BSD c-mode"
+  "Custom C mode hooks. BSD style braces."
   (interactive)
   (c-set-style "bsd")
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
   (setq
-   show-trailing-whitespace t
    default-tab-width 4
    tab-width 4
    indent-tabs-mode nil)
-  (local-set-key "\C-cc" 'comment-region)
-  (local-set-key "\C-c\C-c" 'compile)
-  (local-set-key "\C-x\C-n" 'next-error)
-  (local-set-key "\C-x\C-p" 'previous-error)
 )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-(add-hook 'c++-mode-common-hook 'my-c-mode-common-hook)
 
-;; sh mode
-(defun my-sh-mode ()
-  "My shell mode settings."
-  (local-set-key "\C-c\C-c" 'compile)
-  (local-set-key "\C-cc" 'comment-region))
-(add-hook 'sh-mode-hook 'my-sh-mode)
-(add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
+;; Whitespace setting
+(defun my-whitespace-hook ()
+  "Show trailing whitespace."
+  (setq
+   show-trailing-whitespace t)
+)
 
-;; Compile when using shortcut from compile buffer
-(defun my-compilation-mode ()
-  "My compilation-mode settings."
-  (local-set-key "\C-c\C-c" 'compile))
+(add-hook 'f90-mode-hook 'my-whitespace-hook)
+(add-hook 'c-mode-common-hook 'my-whitespace-hook)
+(add-hook 'go-mode-hook 'my-whitespace-hook)
 
-;; Customize compile command when in makefile mode
-(defun my-makefile-mode ()
-  (define-key makefile-mode-map "\C-c\C-c" 'compile))
-(add-hook 'makefile-mode-hook 'my-makefile-mode)
+; Autoload elisp scripts
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+
+;; Go mode
+(autoload 'go-mode "go-mode"
+  "Major mode for editing go language files" t)
+(autoload 'gofmt-before-save "go-mode"
+  "Run gofmt before saving" t)
+
+; Statistics modes
+(load "ess-site")
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-to-list 'auto-mode-alist '("\\.mk$" . makefile-mode))
 (add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+(add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
+
+;; custom bindings
+(defun my-custom-bindings ()
+  "My custom bindings."
+  (local-set-key "\C-c\C-c" 'compile)
+  (local-set-key "\C-cc" 'comment-region)
+  (local-set-key "\C-x\C-n" 'next-error)
+  (local-set-key "\C-x\C-p" 'previous-error))
+
+(add-hook 'c-mode-hook 'my-custom-bindings)
+(add-hook 'c++-mode-hook 'my-custom-bindings)
+(add-hook 'java-mode-hook 'my-custom-bindings)
+(add-hook 'f90-mode-hook 'my-custom-bindings)
+(add-hook 'emacs-lisp-mode-hook 'my-custom-bindings)
+(add-hook 'sh-mode-hook 'my-custom-bindings)
+(add-hook 'makefile-mode-hook 'my-custom-bindings)
+(add-hook 'cmake-mode-hook 'my-custom-bindings)
+(add-hook 'ess-mode-hook 'my-custom-bindings)
+
+;; Application modes
+; Jabber mode
+(require 'jabber)
