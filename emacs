@@ -125,6 +125,7 @@
 (load "ess-site")
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cuh$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
