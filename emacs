@@ -109,6 +109,7 @@
 (add-hook 'f90-mode-hook 'my-whitespace-hook)
 (add-hook 'c-mode-common-hook 'my-whitespace-hook)
 (add-hook 'go-mode-hook 'my-whitespace-hook)
+(add-hook 'ess-mode-hook 'my-whitespace-hook)
 
 ; Autoload elisp scripts
 (autoload 'markdown-mode "markdown-mode"
