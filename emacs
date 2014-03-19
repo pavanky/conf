@@ -159,6 +159,7 @@
 (add-hook 'makefile-mode-hook 'my-custom-bindings)
 (add-hook 'cmake-mode-hook 'my-custom-bindings)
 (add-hook 'ess-mode-hook 'my-custom-bindings)
+(add-hook 'markdown-mode-hook 'my-custom-bindings)
 
 ;; Application modes
 ; Jabber mode
