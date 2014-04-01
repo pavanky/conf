@@ -20,7 +20,7 @@ create()
 root_dir=`echo $(cd $(dirname "$1") && pwd -P)/$(basename "$1")`
 
 # Create symbolic links from config files
-create $root_dir bashrc screenrc ps1 gitconfig emacs
+create $root_dir bashrc screenrc ps1 gitconfig emacs i3/config
 
 # Download emacs plugins
 $root_dir/emacs_plugins ~/.emacs.d/scripts
