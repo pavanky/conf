@@ -18,10 +18,10 @@ bindsym Mod1+Ctrl+q kill
 bindsym Mod1+Ctrl+r exec dmenu_run
 
 # Switching focus between windows
-bindsym Mod1+Left focus left
-bindsym Mod1+Right focus right
-bindsym Mod1+Down focus down
-bindsym Mod1+Up focus up
+bindsym Mod4+Left focus left
+bindsym Mod4+Right focus right
+bindsym Mod4+Down focus down
+bindsym Mod4+Up focus up
 
 # Switching between workspaces
 bindsym Mod1+Ctrl+Right workspace next_on_output
@@ -39,10 +39,10 @@ bindsym Mod1+Ctrl+9 workspace 9
 bindsym Mod1+Ctrl+0 workspace 10
 
 # Moving windows within workspace
-bindsym Mod1+Shift+Left move left
-bindsym Mod1+Shift+Down move down
-bindsym Mod1+Shift+Up move up
-bindsym Mod1+Shift+Right move right
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Right move right
 
 # Moving container between workspaces
 bindsym Mod1+Ctrl+Shift+Right move container to workspace next
