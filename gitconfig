@@ -8,6 +8,7 @@
   l = log --date-order --graph --pretty='%h %C(red)%an%Creset %s %C(yellow)%ar %C(green)%d%Creset'
   c = log --date-order         --pretty='%h %C(red)%an%Creset %s %C(yellow)%ar %C(green)%d%Creset'
   f = fetch -pt --all
+  r = reset HEAD
 
 [push]
   default = current
@@ -17,15 +18,18 @@
 
 [color]
   ui = true
+  
 [color "branch"]
   current = cyan
   local = yellow
   remote = green
+
 [color "diff"]
   meta = blue bold
   frag = magenta bold
   old = red bold
   new = green bold
+
 [color "status"]
   added = magenta bold
   changed = green bold
