@@ -1,0 +1,127 @@
+# Default layout
+workspace_layout tabbed
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below. ISO 10646 = Unicode
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+
+# Use Mouse+Mod1+Ctrl to drag floating windows to their wanted position
+floating_modifier Mod1+Ctrl
+
+# start a terminal
+bindsym Mod1+Ctrl+Return exec terminal
+
+# kill focused window
+bindsym Mod1+Ctrl+q kill
+
+# start dmenu (a program launcher)
+bindsym Mod1+F2 exec dmenu_run
+
+# Switching focus between windows
+bindsym Mod4+Left focus left
+bindsym Mod4+Right focus right
+bindsym Mod4+Down focus down
+bindsym Mod4+Up focus up
+
+# Switching between workspaces
+bindsym Mod1+Ctrl+Right workspace next_on_output
+bindsym Mod1+Ctrl+Left workspace prev_on_output
+bindsym Mod1+Ctrl+Tab workspace back_and_forth
+bindsym Mod1+Ctrl+1 workspace 1
+bindsym Mod1+Ctrl+2 workspace 2
+bindsym Mod1+Ctrl+3 workspace 3
+bindsym Mod1+Ctrl+4 workspace 4
+bindsym Mod1+Ctrl+5 workspace 5
+bindsym Mod1+Ctrl+6 workspace 6
+bindsym Mod1+Ctrl+7 workspace 7
+bindsym Mod1+Ctrl+8 workspace 8
+bindsym Mod1+Ctrl+9 workspace 9
+bindsym Mod1+Ctrl+0 workspace 10
+
+# Moving windows within workspace
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Right move right
+
+# Moving container between workspaces
+bindsym Mod1+Ctrl+Shift+Right move container to workspace next
+bindsym Mod1+Ctrl+Shift+Left move container to workspace prev
+bindsym Mod1+Ctrl+Shift+1 move container to workspace 1
+bindsym Mod1+Ctrl+Shift+2 move container to workspace 2
+bindsym Mod1+Ctrl+Shift+3 move container to workspace 3
+bindsym Mod1+Ctrl+Shift+4 move container to workspace 4
+bindsym Mod1+Ctrl+Shift+5 move container to workspace 5
+bindsym Mod1+Ctrl+Shift+6 move container to workspace 6
+bindsym Mod1+Ctrl+Shift+7 move container to workspace 7
+bindsym Mod1+Ctrl+Shift+8 move container to workspace 8
+bindsym Mod1+Ctrl+Shift+9 move container to workspace 9
+bindsym Mod1+Ctrl+Shift+0 move container to workspace 10
+
+
+# split in horizontal orientation
+bindsym Mod1+Ctrl+h split h
+
+# split in vertical orientation
+bindsym Mod1+Ctrl+v split v
+
+# enter fullscreen mode for the focused container
+bindsym Mod1+Ctrl+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym Mod1+Ctrl+w layout tabbed
+bindsym Mod1+Ctrl+e layout toggle split
+
+# toggle tiling / floating
+bindsym Mod1+Ctrl+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Mod1+Ctrl+space focus mode_toggle
+
+# focus the parent container
+bindsym Mod1+Ctrl+a focus parent
+
+# reload the configuration file
+bindsym Mod1+Ctrl+Shift+c reload
+# restart i3 inplace (preser2ves your layout/session, can be used to upgrade i3)
+bindsym Mod1+Ctrl+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod1+Ctrl+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod4+Ctrl+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+        status_command i3status
+}
+
+# Set wallpaper
+exec --no-startup-id sh ~/.fehbg
+
+# lockscreen
+bindsym Mod1+Ctrl+l exec i3lock -i ~/Downloads/Wallpapers/You_Shall_Not_Pass.png

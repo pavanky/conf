@@ -13,5 +13,5 @@ rm -rf markdown-mode.el go-mode.el ess jabber
 wget -O markdown-mode.el http://jblevins.org/projects/markdown-mode/markdown-mode.el
 wget -O go-mode.el       http://golang.org/misc/emacs/go-mode.el?m=text
 
-git clone https://github.com/emacs-ess/ESS.git ess
+git clone https://github.com/emacs-ess/ESS ess
 git clone git://git.code.sf.net/p/emacs-jabber/git jabber

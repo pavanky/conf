@@ -109,6 +109,7 @@
 (add-hook 'f90-mode-hook 'my-whitespace-hook)
 (add-hook 'c-mode-common-hook 'my-whitespace-hook)
 (add-hook 'go-mode-hook 'my-whitespace-hook)
+(add-hook 'ess-mode-hook 'my-whitespace-hook)
 
 ; Autoload elisp scripts
 (autoload 'markdown-mode "markdown-mode"
@@ -124,6 +125,7 @@
 (load "ess-site")
 
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cuh$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
@@ -157,6 +159,7 @@
 (add-hook 'makefile-mode-hook 'my-custom-bindings)
 (add-hook 'cmake-mode-hook 'my-custom-bindings)
 (add-hook 'ess-mode-hook 'my-custom-bindings)
+(add-hook 'markdown-mode-hook 'my-custom-bindings)
 
 ;; Application modes
 ; Jabber mode
