@@ -91,6 +91,10 @@
   (c-set-style "bsd")
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
+)
+
+(defun my-tab-width-hook ()
+  "Set tab width to 4."
   (setq
    default-tab-width 4
    tab-width 4
@@ -98,6 +102,9 @@
 )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+(add-hook 'c-mode-common-hook 'my-tab-width-hook)
+(add-hook 'go-mode-hook 'my-tab-width-hook)
+(add-hook 'f90-mode-hook 'my-tab-width-hook)
 
 ;; Whitespace setting
 (defun my-whitespace-hook ()
