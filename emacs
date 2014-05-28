@@ -84,6 +84,9 @@
 ; Enable which-func-mode
 (which-func-mode 1)
 
+; Delete trailing whitespace before save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; C and C++
 (defun my-c-mode-common-hook ()
   "Custom C mode hooks. BSD style braces."
