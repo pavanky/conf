@@ -17,3 +17,4 @@ git clone https://github.com/emacs-ess/ESS ess
 git clone git://git.code.sf.net/p/emacs-jabber/git jabber
 
 wget -O ggtags.el https://raw.githubusercontent.com/leoliu/ggtags/master/ggtags.el
+wget -O sr-speedbar.el http://www.emacswiki.org/emacs/download/sr-speedbar.el
