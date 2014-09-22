@@ -24,6 +24,3 @@ create $root_dir bashrc screenrc ps1 gitconfig emacs i3/config
 
 # Download emacs plugins
 $root_dir/emacs_plugins ~/.emacs.d/scripts
-
-# Set gnome terminal theme
-sh dark-pastels.sh
