@@ -159,7 +159,6 @@
   (local-set-key "\C-cc" 'comment-region)
   (local-set-key "\C-x\C-n" 'next-error)
   (local-set-key "\C-x\C-p" 'previous-error)
-  (local-set-key [(tab)] 'company-complete)
   )
 
 (add-hook 'c-mode-hook 'my-custom-bindings)
@@ -199,4 +198,3 @@
 ;; Complete anything
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
-(setq company-backends (delete 'company-semantic company-backends))
