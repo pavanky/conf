@@ -4,6 +4,8 @@
 (add-to-list 'load-path "~/.emacs.d/scripts/ess/lisp")
 (add-to-list 'load-path "~/.emacs.d/scripts/jabber")
 (add-to-list 'load-path "~/.emacs.d/scripts/company")
+(load-file "~/.emacs.d/scripts/cedet/cedet-devel-load.el")
+(load-file "~/.emacs.d/scripts/cedet/contrib/cedet-contrib-load.el")
 
 ;; Save real estate.
 (menu-bar-mode -1)
