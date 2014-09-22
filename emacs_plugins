@@ -19,9 +19,3 @@ git clone https://github.com/company-mode/company-mode.git company
 
 wget -O ggtags.el https://raw.githubusercontent.com/leoliu/ggtags/master/ggtags.el
 wget -O sr-speedbar.el http://www.emacswiki.org/emacs/download/sr-speedbar.el
-
-git clone https://github.com/emacsmirror/cedet.git cedet
-make -C cedet
-make -C cedet/contrib
-#make -C cedet/lisp/cedet/srecode
-

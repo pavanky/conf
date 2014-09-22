@@ -4,8 +4,6 @@
 (add-to-list 'load-path "~/.emacs.d/scripts/ess/lisp")
 (add-to-list 'load-path "~/.emacs.d/scripts/jabber")
 (add-to-list 'load-path "~/.emacs.d/scripts/company")
-(load-file "~/.emacs.d/scripts/cedet/cedet-devel-load.el")
-(load-file "~/.emacs.d/scripts/cedet/contrib/cedet-contrib-load.el")
 
 ;; Save real estate.
 (menu-bar-mode -1)
@@ -13,13 +11,12 @@
 
 ;; Customizing modeline colors
 (custom-set-faces
- ; Current window
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(mode-line ((t (:foreground "white"))))
- ; Have no idea what this does
- ;'(mode-line-highlight ((t (:foreground "white"))))
- ; inactive window
- '(mode-line-inactive ((t (:foreground "black"))))
-)
+ '(mode-line-inactive ((t (:foreground "black")))))
 
 (setq-default indent-tabs-mode nil)
 
@@ -161,7 +158,9 @@
   (local-set-key "\C-c\C-c" 'compile)
   (local-set-key "\C-cc" 'comment-region)
   (local-set-key "\C-x\C-n" 'next-error)
-  (local-set-key "\C-x\C-p" 'previous-error))
+  (local-set-key "\C-x\C-p" 'previous-error)
+  (local-set-key [(tab)] 'company-complete)
+  )
 
 (add-hook 'c-mode-hook 'my-custom-bindings)
 (add-hook 'c++-mode-hook 'my-custom-bindings)
@@ -200,3 +199,4 @@
 ;; Complete anything
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
+(setq company-backends (delete 'company-semantic company-backends))
