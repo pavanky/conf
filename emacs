@@ -3,6 +3,7 @@
 (add-to-list 'load-path "~/.emacs.d/scripts")
 (add-to-list 'load-path "~/.emacs.d/scripts/ess/lisp")
 (add-to-list 'load-path "~/.emacs.d/scripts/jabber")
+(add-to-list 'load-path "~/.emacs.d/scripts/company")
 
 ;; Save real estate.
 (menu-bar-mode -1)
@@ -176,7 +177,6 @@
 (require 'jabber)
 
 ;; ggtags config
-
 (require 'ggtags)
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -192,4 +192,9 @@
 
 (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
 
+;; C++ Project explorer
 (require 'sr-speedbar)
+
+;; Complete anything
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
