@@ -9,6 +9,7 @@
   c = log --date-order         --pretty='%h %C(red)%an%Creset %s %C(yellow)%ar %C(green)%d%Creset'
   f = fetch -pt --all
   r = reset HEAD
+  ba = branch -avv
 
 [push]
   default = current
@@ -37,5 +38,4 @@
 
 [user]
 	name = Pavan Yalamanchili
-	email = contact@pavanky.com
-
+	email = pavan@arrayfire.com
