@@ -1,9 +1,27 @@
 (setq user-full-name "Pavan Yalamanchili")
- ; contains necessary .el files
-(add-to-list 'load-path "~/.emacs.d/scripts")
-(add-to-list 'load-path "~/.emacs.d/scripts/ess/lisp")
-(add-to-list 'load-path "~/.emacs.d/scripts/jabber")
-(add-to-list 'load-path "~/.emacs.d/scripts/company")
+(require 'package)
+
+(setq package-list '(jabber
+                     auto-complete
+                     ess
+                     yasnippet
+                     auto-complete-c-headers
+                     iedit
+                     ))
+
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+(package-initialize)
+
+; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+        (package-install package)))
 
 ;; Save real estate.
 (menu-bar-mode -1)
@@ -176,25 +194,29 @@
 ; Jabber mode
 (require 'jabber)
 
-;; ggtags config
-(require 'ggtags)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-              (ggtags-mode 1))))
+; general auto complete features
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
 
-(define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
-(define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
-(define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-(define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-(define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-(define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+; auto completes code snippets
+(require 'yasnippet)
+(yas-global-mode 1)
 
-(define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+; Enable auto-complete-c-headers for c, c++
+(defun my-ac-c-header-init()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (add-to-list 'achead:include-directories '"/usr/include")
+  (add-to-list 'achead:include-directories '"/usr/include/c++/4.9.2")
+  (add-to-list 'achead:include-directories '"/usr/include/c++/4.8")
+  (add-to-list 'achead:include-directories
+               '"/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include")
+  (add-to-list 'achead:include-directories
+               '"/usr/lib/gcc/x86_64-linux-gnu/4.8/include")
+  )
 
-;; C++ Project explorer
-(require 'sr-speedbar)
+(add-hook 'c++-mode-hook 'my-ac-c-header-init)
+(add-hook 'c-mode-hook 'my-ac-c-header-init)
 
-;; Complete anything
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+(define-key global-map (kbd "C-c ;") 'iedit-mode)
