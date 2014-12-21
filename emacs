@@ -33,7 +33,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(mode-line ((t (:foreground "white"))))
+ '(mode-line ((t (:foreground "red"))))
  '(mode-line-inactive ((t (:foreground "black")))))
 
 (setq-default indent-tabs-mode nil)
