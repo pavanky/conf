@@ -7,6 +7,7 @@
                      yasnippet
                      auto-complete-c-headers
                      iedit
+                     markdown-mode
                      ))
 
 (add-to-list 'package-archives
