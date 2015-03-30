@@ -42,6 +42,9 @@ if [ -r /usr/share/git ]; then
     . /usr/share/git/git-prompt.sh
 elif [ -r /etc/bash_completion.d/git ]; then
     . /etc/bash_completion.d/git
+    if [ -r /usr/share/git-core/ ]; then
+        . /usr/share/git-core/contrib/completion/git-prompt.sh
+    fi
 elif [ -r /etc/bash_completion.d/git-prompt ]; then
     . /etc/bash_completion.d/git-prompt
 else
