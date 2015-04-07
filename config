@@ -19,5 +19,7 @@ create()
 # use this instead of readlink to make it not dependent on linux
 root_dir=`echo $(cd $(dirname "$1") && pwd -P)/$(basename "$1")`
 
+mkdir -p ~/.i3
+
 # Create symbolic links from config files
 create $root_dir bashrc screenrc ps1 gitconfig emacs i3/config
