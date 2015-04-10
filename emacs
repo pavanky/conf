@@ -8,6 +8,7 @@
                      auto-complete-c-headers
                      iedit
                      markdown-mode
+                     cmake-mode
                      ))
 
 (add-to-list 'package-archives
@@ -144,6 +145,8 @@
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
 
+(require 'cmake-mode)
+
 ;; Go mode
 (autoload 'go-mode "go-mode"
   "Major mode for editing go language files" t)
@@ -160,13 +163,14 @@
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-to-list 'auto-mode-alist '("\\.mk$" . makefile-mode))
 (add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
-(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
-(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 (add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
+; Has to be below markdown-mode to override CMakeLists.txt to be cmake mode
+(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
