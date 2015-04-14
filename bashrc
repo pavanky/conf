@@ -4,7 +4,7 @@
 # General
 alias ls='ls --color=auto'
 alias ll='ls -Al'
-alias e='emacs -nw'
+alias e='TERM=xterm emacs -nw'
 alias E='sudo emacs -nw'
 alias grep='grep --color'
 alias sudo='sudo '

@@ -23,7 +23,7 @@
 ; install the missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
-        (package-install package)))
+    (package-install package)))
 
 ;; Save real estate.
 (menu-bar-mode -1)
@@ -36,6 +36,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:foreground "red"))))
+ '(mode-line-buffer-id ((t (:weight bold))))
  '(mode-line-inactive ((t (:foreground "black")))))
 
 (setq-default indent-tabs-mode nil)
