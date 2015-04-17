@@ -2,9 +2,10 @@
 [ -z "$PS1" ] && return
 
 # General
+TERM=xterm #force 16 bit color mode
 alias ls='ls --color=auto'
 alias ll='ls -Al'
-alias e='TERM=xterm emacs -nw'
+alias e='emacs -nw'
 alias E='sudo emacs -nw'
 alias grep='grep --color'
 alias sudo='sudo '
