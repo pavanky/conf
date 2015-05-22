@@ -3,26 +3,39 @@
 
 # General
 TERM=xterm #force 16 bit color mode
-alias ls='ls --color=auto'
+platform=`uname`
+
 alias ll='ls -Al'
 alias e='emacs -nw'
 alias E='sudo emacs -nw'
 alias grep='grep --color'
 alias sudo='sudo '
 
+if [[ "$platform" == 'Linux' ]]; then
+    alias ls='ls --color=auto'
+elif [[ "$platform" == 'Darwin' ]]; then
+    alias ls='ls -G'
+    export CLICOLOR=1
+    export LSCOLORS=ExFxCxDxBxegedabagacad
+fi
+
 # Navigation
 alias ..='cd ..'
 alias -- -='cd -'
 
 # Arch Linux specific aliases
-if [ `grep Arch /etc/issue | wc -l` -gt 0 ]; then
-    alias pacman='sudo pacman'
-    alias pacaur='pacaur --aur --noedit'
+if [ -r /etc/issue ]; then
+    if [ `grep Arch /etc/issue | wc -l` -gt 0 ]; then
+	alias pacman='sudo pacman'
+	alias pacaur='pacaur --aur --noedit'
+    fi
 fi
 
 # bind ctrl-r/s to up/down
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
+bind '"\e[5C": forward-word'
+bind '"\e[5D": backward-word'
 
 calc() { echo "$@" | bc -l; }
 note() { echo "$@" >> ~/Documents/notes; }
@@ -38,7 +51,13 @@ export BINS=$CUDADIR/bin:$GAMEDIR/bin
 export PATH=$PATH:$BINS
 
 # GIT PS1 and auto complete
-if [ -r /usr/share/git ]; then
+
+if [[ "$platform" == 'Darwin' ]]; then
+     if [ -r /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
+    . /usr/local/etc/bash_completion.d/git-prompt.sh
+    . /usr/local/etc/bash_completion.d/git-completion.bash
+    fi
+elif [ -r /usr/share/git ]; then
     . /usr/share/git/completion/git-completion.bash
     . /usr/share/git/git-prompt.sh
 elif [ -r /etc/bash_completion.d/git ]; then
