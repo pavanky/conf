@@ -9,6 +9,7 @@
                      iedit
                      markdown-mode
                      cmake-mode
+                     go-mode
                      ))
 
 (add-to-list 'package-archives
@@ -151,8 +152,7 @@
 ;; Go mode
 (autoload 'go-mode "go-mode"
   "Major mode for editing go language files" t)
-(autoload 'gofmt-before-save "go-mode"
-  "Run gofmt before saving" t)
+(add-hook 'before-save-hook #'gofmt-before-save)
 
 ; Statistics modes
 (load "ess-site")
