@@ -10,6 +10,7 @@
                      markdown-mode
                      cmake-mode
                      go-mode
+                     rust-mode
                      ))
 
 (add-to-list 'package-archives
@@ -154,6 +155,9 @@
   "Major mode for editing go language files" t)
 (add-hook 'before-save-hook #'gofmt-before-save)
 
+;; Rust mode
+(autoload 'rust-mode "rust-mode" nil t)
+
 ; Statistics modes
 (load "ess-site")
 
@@ -169,6 +173,8 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
 ; Has to be below markdown-mode to override CMakeLists.txt to be cmake mode
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
@@ -195,6 +201,9 @@
 (add-hook 'cmake-mode-hook 'my-custom-bindings)
 (add-hook 'ess-mode-hook 'my-custom-bindings)
 (add-hook 'markdown-mode-hook 'my-custom-bindings)
+(add-hook 'rust-mode-hook 'my-custom-bindings)
+(add-hook 'python-mode-hook 'my-custom-bindings)
+(add-hook 'go-mode-hook 'my-custom-bindings)
 
 ;; Application modes
 ; Jabber mode
