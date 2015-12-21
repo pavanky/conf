@@ -24,12 +24,12 @@ alias ..='cd ..'
 alias -- -='cd -'
 
 # Arch Linux specific aliases
+
 if [ -r /etc/issue ]; then
     if [ `grep Arch /etc/issue | wc -l` -gt 0 ]; then
-	alias pacman='sudo pacman'
-	alias pacaur='pacaur --aur --noedit'
+        alias pacman='sudo pacman'
+    	alias pacaur='MAKEFLAGS=j4 pacaur --aur --noedit'
     fi
-fi
 
 # bind ctrl-r/s to up/down
 bind '"\e[A": history-search-backward'
