@@ -30,6 +30,7 @@ if [ -r /etc/issue ]; then
         alias pacman='sudo pacman'
     	alias pacaur='MAKEFLAGS=j4 pacaur --aur --noedit'
     fi
+fi
 
 # bind ctrl-r/s to up/down
 bind '"\e[A": history-search-backward'
