@@ -223,7 +223,7 @@
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
 
 ; Enable auto-complete-c-headers for c, c++
-(defun my-ac-c-header-init()
+(defun my-c-autocomplete-hooks()
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
   (add-to-list 'achead:include-directories '"/usr/include")
@@ -234,10 +234,8 @@
         do
         (add-to-list 'achead:include-directories incdir))
   )
-
-
-(add-hook 'c++-mode-hook 'my-ac-c-header-init)
-(add-hook 'c-mode-hook 'my-ac-c-header-init)
+(add-hook 'c++-mode-hook 'my-c-autocomplete-hooks)
+(add-hook 'c-mode-hook 'my-c-autocomplete-hooks)
 
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
 
