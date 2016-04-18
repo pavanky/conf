@@ -219,6 +219,9 @@
 (require 'auto-complete-config)
 (ac-config-default)
 
+
+(define-key global-map (kbd "C-c ;") 'iedit-mode)
+
 ; Enable auto-complete-c-headers for c, c++
 (defun my-ac-c-header-init()
   (require 'auto-complete-c-headers)
