@@ -218,13 +218,14 @@
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
   (add-to-list 'achead:include-directories '"/usr/include")
-  (add-to-list 'achead:include-directories '"/usr/include/c++/4.9.2")
-  (add-to-list 'achead:include-directories '"/usr/include/c++/4.8")
-  (add-to-list 'achead:include-directories
-               '"/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include")
-  (add-to-list 'achead:include-directories
-               '"/usr/lib/gcc/x86_64-linux-gnu/4.8/include")
+  (loop for incdir in (file-expand-wildcards "/usr/include/c++/*")
+        do
+        (add-to-list 'achead:include-directories incdir))
+  (loop for incdir in (file-expand-wildcards "/usr/lib/gcc/*/*/include")
+        do
+        (add-to-list 'achead:include-directories incdir))
   )
+
 
 (add-hook 'c++-mode-hook 'my-ac-c-header-init)
 (add-hook 'c-mode-hook 'my-ac-c-header-init)
