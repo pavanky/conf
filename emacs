@@ -10,6 +10,7 @@
                      cmake-mode
                      go-mode
                      rust-mode
+                     lua-mode
                      ))
 
 (add-to-list 'package-archives
@@ -156,6 +157,11 @@
 
 ;; Rust mode
 (autoload 'rust-mode "rust-mode" nil t)
+
+;; lua mode
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
 ; Statistics modes
 (load "ess-site")
