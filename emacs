@@ -230,3 +230,7 @@
 (add-hook 'c-mode-hook 'my-ac-c-header-init)
 
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
+
+;; Theme for the GUI
+(custom-set-variables
+ '(custom-enabled-themes (quote (wombat))))
