@@ -4,7 +4,6 @@
 (setq package-list '(jabber
                      auto-complete
                      ess
-                     yasnippet
                      auto-complete-c-headers
                      iedit
                      markdown-mode
@@ -213,10 +212,6 @@
 (require 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
-
-; auto completes code snippets
-(require 'yasnippet)
-(yas-global-mode 1)
 
 ; Enable auto-complete-c-headers for c, c++
 (defun my-ac-c-header-init()
