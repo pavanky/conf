@@ -40,12 +40,16 @@
 
 ;;;; Section 1: Configuring emacs options
 
+(define-key global-map (kbd "C-c e") 'eval-buffer)
+
 (setq ring-bell-function 'ignore)
 (setq tramp-default-method "ssh")
 (menu-bar-mode -1) ;Removes menu bar
 (tool-bar-mode -1) ;Removes tool bar
 
 (setq-default indent-tabs-mode nil) ;Tabs auto indent
+
+(global-auto-revert-mode 1)
 
 (setq
  ; show warning instead of following
@@ -250,7 +254,7 @@
 
 ; git
 (require 'magit)
-(define-key global-map (kbd "C-x C-g") 'magit-status)
+(define-key global-map (kbd "C-c g") 'magit-status)
 
 ; multi term
 (require 'multi-term)
