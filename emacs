@@ -1,9 +1,14 @@
 (setq user-full-name "Pavan Yalamanchili")
+
+;;;; Section 0: Auto install packages
+
+;; Used the code mentioned here:
+;; http://stackoverflow.com/a/10093312/2192361
+
 (require 'package)
 
-(setq package-list '(jabber
+(setq package-list '(
                      auto-complete
-                     ess
                      auto-complete-c-headers
                      iedit
                      markdown-mode
@@ -11,39 +16,37 @@
                      go-mode
                      rust-mode
                      lua-mode
+                     cuda-mode
+                     opencl-mode
+                     ess
+                     magit
+                     multi-term
+                     jabber
                      ))
 
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 (package-initialize)
 
-; fetch the list of packages available
-(unless package-archive-contents
+(unless package-archive-contents ;fetch the list of packages available
   (package-refresh-contents))
 
-; install the missing packages
-(dolist (package package-list)
+(dolist (package package-list) ;install the missing packages
   (unless (package-installed-p package)
     (package-install package)))
 
-;; Save real estate.
-(menu-bar-mode -1)
-(tool-bar-mode -1)
 
-;; Customizing modeline colors
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(mode-line ((t (:foreground "red"))))
- '(mode-line-buffer-id ((t (:weight bold))))
- '(mode-line-inactive ((t (:foreground "black")))))
+;;;; Section 1: Configuring emacs options
 
-(setq-default indent-tabs-mode nil)
+(setq ring-bell-function 'ignore)
+(setq tramp-default-method "ssh")
+(menu-bar-mode -1) ;Removes menu bar
+(tool-bar-mode -1) ;Removes tool bar
 
-;; Default configuration
+(setq-default indent-tabs-mode nil) ;Tabs auto indent
+
 (setq
  ; show warning instead of following
  vc-follow-symlinks nil
@@ -70,7 +73,9 @@
  search-highlight t
  query-replace-highlight t
  require-final-newline t
- next-line-add-newlines nil         ; No new lines when scrolling down
+
+ ; No new lines when scrolling down
+ next-line-add-newlines nil
 
  ; Scrolling
  scroll-step 1
@@ -102,15 +107,59 @@
  compilation-process-setup-function nil
 )
 
-; Enable delete selection mode
-(delete-selection-mode 1)
-; Enable which-func-mode
-(which-func-mode 1)
+(delete-selection-mode 1) ; Can replace selected area by typing
 
-; Delete trailing whitespace before save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(which-func-mode 1) ; Displays the current function name beside major mode
 
-;; C and C++
+(add-hook 'before-save-hook 'delete-trailing-whitespace) ; Delete trailing whitespace before save
+
+(savehist-mode 1)
+(setq savehist-file "~/.emacs.d/history") ; Define history location
+
+;;;; Section 2: Programming language options
+
+;; Loading necessary packages
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+
+(require 'cmake-mode)
+(require 'opencl-mode)
+
+(autoload 'go-mode "go-mode" "Major mode for editing go language files" t)
+(add-hook 'before-save-hook #'gofmt-before-save)
+
+(autoload 'rust-mode "rust-mode" nil t)
+
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+
+(load "ess-site")
+
+;; Bind major mode to file extensions
+(add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
+(add-to-list 'auto-mode-alist '("\\.cuh$" . cuda-mode))
+(add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cl$" . opencl-mode))
+(add-to-list 'auto-mode-alist '("\\.clh$" . opencl-mode))
+(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
+(add-to-list 'auto-mode-alist '("\\.mk$" . makefile-mode))
+(add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+(add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+
+; Has to be below markdown-mode to override CMakeLists.txt to be cmake mode
+(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
+
+
+;; Custom hooks for various modes
+
+; C/C++ style hook
 (defun my-c-mode-common-hook ()
   "Custom C mode hooks. BSD style braces."
   (interactive)
@@ -118,7 +167,9 @@
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
 )
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
+; Tab width hook
 (defun my-tab-width-hook ()
   "Set tab width to 4."
   (setq
@@ -127,12 +178,11 @@
    indent-tabs-mode nil)
 )
 
-(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 (add-hook 'c-mode-common-hook 'my-tab-width-hook)
 (add-hook 'go-mode-hook 'my-tab-width-hook)
 (add-hook 'f90-mode-hook 'my-tab-width-hook)
 
-;; Whitespace setting
+; Display trailing whitespace hook
 (defun my-whitespace-hook ()
   "Show trailing whitespace."
   (setq
@@ -144,50 +194,7 @@
 (add-hook 'go-mode-hook 'my-whitespace-hook)
 (add-hook 'ess-mode-hook 'my-whitespace-hook)
 
-; Autoload elisp scripts
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing Markdown files" t)
-
-(require 'cmake-mode)
-
-;; Go mode
-(autoload 'go-mode "go-mode"
-  "Major mode for editing go language files" t)
-(add-hook 'before-save-hook #'gofmt-before-save)
-
-;; Rust mode
-(autoload 'rust-mode "rust-mode" nil t)
-
-;; lua mode
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
-
-; Statistics modes
-(load "ess-site")
-
-(add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cuh$" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
-(add-to-list 'auto-mode-alist '("\\.mk$" . makefile-mode))
-(add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-(add-to-list 'auto-mode-alist '("\\.conf$" . sh-mode))
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-
-; Has to be below markdown-mode to override CMakeLists.txt to be cmake mode
-(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
-(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
-
-(savehist-mode 1)
-(setq savehist-file "~/.emacs.d/history")
-
-;; custom bindings
+; Compile and debug hooks
 (defun my-custom-bindings ()
   "My custom bindings."
   (local-set-key "\C-c\C-c" 'compile)
@@ -210,17 +217,12 @@
 (add-hook 'python-mode-hook 'my-custom-bindings)
 (add-hook 'go-mode-hook 'my-custom-bindings)
 
-;; Application modes
-; Jabber mode
-(require 'jabber)
+;;;; Section 3: IDE type features
 
 ; general auto complete features
 (require 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
-
-
-(define-key global-map (kbd "C-c ;") 'iedit-mode)
 
 ; Enable auto-complete-c-headers for c, c++
 (defun my-c-autocomplete-hooks()
@@ -234,11 +236,40 @@
         do
         (add-to-list 'achead:include-directories incdir))
   )
+
 (add-hook 'c++-mode-hook 'my-c-autocomplete-hooks)
 (add-hook 'c-mode-hook 'my-c-autocomplete-hooks)
 
+; Refactoring features
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
+
+;;;; Section 4: Application modes
+
+; Jabber mode
+(require 'jabber)
+
+; git
+(require 'magit)
+(define-key global-map (kbd "C-x C-g") 'magit-status)
+
+; multi term
+(require 'multi-term)
+(define-key global-map (kbd "C-c m") 'multi-term)
+
+
+;;;; Section 5: Themeing
 
 ;; Theme for the GUI
 (custom-set-variables
  '(custom-enabled-themes (quote (wombat))))
+
+;; Customizing modeline colors
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(mode-line ((t (:foreground "red"))))
+ '(mode-line-buffer-id ((t (:weight bold))))
+ '(mode-line-inactive ((t (:foreground "black"))))
+ '(term-color-blue ((t (:background "magenta" :foreground "dark violet")))))
