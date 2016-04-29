@@ -258,8 +258,8 @@
 
 ; multi term
 (require 'multi-term)
-(define-key global-map (kbd "C-c m") 'multi-term)
-
+(define-key global-map (kbd "C-c m") 'multi-term-dedicated-toggle)
+(setq multi-term-dedicated-select-after-open-p t)
 
 ;;;; Section 5: Themeing
 
