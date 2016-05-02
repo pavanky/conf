@@ -160,7 +160,6 @@
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 
-
 ;; Custom hooks for various modes
 
 ; C/C++ style hook
@@ -254,12 +253,15 @@
 
 ; git
 (require 'magit)
-(define-key global-map (kbd "C-c g") 'magit-status)
+(define-key global-map (kbd "C-c g s") 'magit-status)
 
 ; multi term
 (require 'multi-term)
 (define-key global-map (kbd "C-c m") 'multi-term-dedicated-toggle)
 (setq multi-term-dedicated-select-after-open-p t)
+(add-hook 'term-exec-hook
+          (lambda () (set-process-query-on-exit-flag
+                      (get-buffer-process (current-buffer)) nil)))
 
 ;;;; Section 5: Themeing
 
