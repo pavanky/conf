@@ -275,6 +275,9 @@
      ;; Your init file should contain only one such instance.
      ;; If there is more than one, they won't work right.
      '(custom-enabled-themes (quote (flatland-black)))
+     '(custom-safe-themes
+       (quote
+        ("9122dfb203945f6e84b0de66d11a97de6c9edf28b3b5db772472e4beccc6b3c5" default)))
      )
   (
    ;; Load nothing in terminal mode
