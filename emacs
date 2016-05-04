@@ -22,6 +22,7 @@
                      magit
                      multi-term
                      jabber
+                     flatland-black-theme
                      ))
 
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
@@ -267,8 +268,18 @@
 ;;;; Section 5: Themeing
 
 ;; Theme for the GUI
-(custom-set-variables
- '(custom-enabled-themes (quote (wombat))))
+(if (display-graphic-p)
+    (custom-set-variables
+     ;; custom-set-variables was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(custom-enabled-themes (quote (flatland-black)))
+     )
+  (
+   ;; Load nothing in terminal mode
+   )
+  )
 
 ;; Customizing modeline colors
 (custom-set-faces
