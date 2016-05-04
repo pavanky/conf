@@ -46,6 +46,7 @@
 (setq tramp-default-method "ssh")
 (menu-bar-mode -1) ;Removes menu bar
 (tool-bar-mode -1) ;Removes tool bar
+(scroll-bar-mode -1) ; Removes scroll bar
 
 (setq-default indent-tabs-mode nil) ;Tabs auto indent
 
