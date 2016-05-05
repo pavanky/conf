@@ -41,8 +41,6 @@
 
 ;;;; Section 1: Configuring emacs options
 
-(define-key global-map (kbd "C-c e") 'eval-buffer)
-
 (setq ring-bell-function 'ignore)
 (setq tramp-default-method "ssh")
 (menu-bar-mode -1) ;Removes menu bar
@@ -121,6 +119,12 @@
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history") ; Define history location
+
+; Customize some shortcuts
+(define-key global-map (kbd "C-c e") 'eval-buffer)
+(define-key global-map (kbd "C-c r") 'query-replace-regexp)
+(define-key global-map (kbd "C-c h") 'query-replace)
+
 
 ;;;; Section 2: Programming language options
 
