@@ -205,7 +205,7 @@
 (add-hook 'ess-mode-hook 'my-whitespace-hook)
 
 ; Compile and debug hooks
-(defun my-custom-bindings ()
+(defun my-custom-build-bindings ()
   "My custom bindings."
   (local-set-key "\C-c\C-c" 'compile)
   (local-set-key "\C-cc" 'comment-region)
@@ -213,19 +213,21 @@
   (local-set-key "\C-x\C-p" 'previous-error)
   )
 
-(add-hook 'c-mode-hook 'my-custom-bindings)
-(add-hook 'c++-mode-hook 'my-custom-bindings)
-(add-hook 'java-mode-hook 'my-custom-bindings)
-(add-hook 'f90-mode-hook 'my-custom-bindings)
-(add-hook 'emacs-lisp-mode-hook 'my-custom-bindings)
-(add-hook 'sh-mode-hook 'my-custom-bindings)
-(add-hook 'makefile-mode-hook 'my-custom-bindings)
-(add-hook 'cmake-mode-hook 'my-custom-bindings)
-(add-hook 'ess-mode-hook 'my-custom-bindings)
-(add-hook 'markdown-mode-hook 'my-custom-bindings)
-(add-hook 'rust-mode-hook 'my-custom-bindings)
-(add-hook 'python-mode-hook 'my-custom-bindings)
-(add-hook 'go-mode-hook 'my-custom-bindings)
+(add-hook 'c-mode-hook 'my-custom-build-bindings)
+(add-hook 'c++-mode-hook 'my-custom-build-bindings)
+(add-hook 'cuda-mode-hook 'my-custom-build-bindings)
+(add-hook 'opencl-mode-hook 'my-custom-build-bindings)
+(add-hook 'java-mode-hook 'my-custom-build-bindings)
+(add-hook 'f90-mode-hook 'my-custom-build-bindings)
+(add-hook 'emacs-lisp-mode-hook 'my-custom-build-bindings)
+(add-hook 'sh-mode-hook 'my-custom-build-bindings)
+(add-hook 'makefile-mode-hook 'my-custom-build-bindings)
+(add-hook 'cmake-mode-hook 'my-custom-build-bindings)
+(add-hook 'ess-mode-hook 'my-custom-build-bindings)
+(add-hook 'markdown-mode-hook 'my-custom-build-bindings)
+(add-hook 'rust-mode-hook 'my-custom-build-bindings)
+(add-hook 'python-mode-hook 'my-custom-build-bindings)
+(add-hook 'go-mode-hook 'my-custom-build-bindings)
 
 ;;;; Section 3: IDE type features
 
