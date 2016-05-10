@@ -303,5 +303,6 @@
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:foreground "red"))))
  '(mode-line-buffer-id ((t (:weight bold))))
- '(mode-line-inactive ((t (:foreground "black"))))
- '(term-color-blue ((t (:background "magenta" :foreground "dark violet")))))
+ '(mode-line-inactive ((t (:foreground "white"))))
+ '(term-color-blue ((t (:background "magenta" :foreground "dark violet"))))
+ )
