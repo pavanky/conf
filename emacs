@@ -23,6 +23,7 @@
                      multi-term
                      jabber
                      flatland-black-theme
+                     multiple-cursors
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -255,14 +256,17 @@
 ; Refactoring features
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
 
+; git
+(require 'magit)
+(define-key global-map (kbd "C-c g s") 'magit-status)
+
+; multiple cursors
+(require 'multiple-cursors)
+
 ;;;; Section 4: Application modes
 
 ; Jabber mode
 (require 'jabber)
-
-; git
-(require 'magit)
-(define-key global-map (kbd "C-c g s") 'magit-status)
 
 ; multi term
 (require 'multi-term)
