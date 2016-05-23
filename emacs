@@ -24,6 +24,7 @@
                      jabber
                      flatland-black-theme
                      multiple-cursors
+                     spaceline
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -116,6 +117,7 @@
 (delete-selection-mode 1) ; Can replace selected area by typing
 
 (which-func-mode 1) ; Displays the current function name beside major mode
+(setq which-func-unknown "n/a")
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ; Delete trailing whitespace before save
 
@@ -301,8 +303,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(mode-line ((t (:foreground "red"))))
+ '(mode-line ((t (:foreground "Red"))))
  '(mode-line-buffer-id ((t (:weight bold))))
- '(mode-line-inactive ((t (:foreground "white"))))
+ '(mode-line-inactive ((t (:foreground "DarkRed"))))
+ '(mode-line-misc-info ((t (:foreground "yellow"))))
  '(term-color-blue ((t (:background "magenta" :foreground "dark violet"))))
- )
+ '(which-func ((t (:foreground "gold")))))
+
+(require 'spaceline-config)
+(spaceline-spacemacs-theme)
