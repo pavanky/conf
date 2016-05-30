@@ -264,6 +264,12 @@
 
 ; multiple cursors
 (require 'multiple-cursors)
+(define-key global-map (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(define-key global-map (kbd "C->") 'mc/mark-next-like-this)
+(define-key global-map (kbd "C-<") 'mc/mark-previous-like-this)
+(define-key global-map (kbd "C-c C-<") 'mc/mark-all-like-this)
+(define-key global-map (kbd "C-M->") 'mc/unmark-next-like-this)
+(define-key global-map (kbd "C-M-<") 'mc/unmark-previous-like-this)
 
 ;;;; Section 4: Application modes
 
