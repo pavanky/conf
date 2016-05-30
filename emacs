@@ -260,7 +260,7 @@
 
 ; git
 (require 'magit)
-(define-key global-map (kbd "C-c g s") 'magit-status)
+(define-key global-map (kbd "C-c G") 'magit-status)
 
 ; multiple cursors
 (require 'multiple-cursors)
