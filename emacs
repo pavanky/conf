@@ -56,7 +56,7 @@
 
 (setq
  ; show warning instead of following
- vc-follow-symlinks nil
+ vc-follow-symlinks t
 
  ; Remove the new line character
  kill-whole-line t
