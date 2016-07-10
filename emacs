@@ -123,6 +123,7 @@
 
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history") ; Define history location
+(setq tramp-histfile-override "~/.emacs.d/tramp_history")
 
 ; Customize some shortcuts
 (define-key global-map (kbd "C-c e") 'eval-buffer)
@@ -261,6 +262,7 @@
 ; git
 (require 'magit)
 (define-key global-map (kbd "C-c G") 'magit-status)
+(add-hook 'after-save-hook 'magit-after-save-refresh-status)
 
 ; multiple cursors
 (require 'multiple-cursors)
