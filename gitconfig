@@ -19,7 +19,7 @@
 
 [color]
   ui = true
-  
+
 [color "branch"]
   current = cyan
   local = yellow
@@ -37,5 +37,5 @@
   untracked = blue bold
 
 [user]
-	name = Pavan Yalamanchili
-	email = pavan@arrayfire.com
+        name = Pavan Yalamanchili
+	email = contact@pavanky.com
