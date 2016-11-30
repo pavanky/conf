@@ -25,6 +25,9 @@
                      flatland-black-theme
                      multiple-cursors
                      spaceline
+                     scala-mode
+                     ensime
+                     yaml-mode
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -130,7 +133,6 @@
 (define-key global-map (kbd "C-c r") 'query-replace-regexp)
 (define-key global-map (kbd "C-c h") 'query-replace)
 
-
 ;;;; Section 2: Programming language options
 
 ;; Loading necessary packages
@@ -139,6 +141,8 @@
 
 (require 'cmake-mode)
 (require 'opencl-mode)
+(require 'ensime)
+(require 'yaml-mode)
 
 (autoload 'go-mode "go-mode" "Major mode for editing go language files" t)
 (add-hook 'before-save-hook #'gofmt-before-save)
@@ -164,8 +168,9 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(add-to-list 'auto-mode-alist '("\\.rs$\\'" . rust-mode))
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 ; Has to be below markdown-mode to override CMakeLists.txt to be cmake mode
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
@@ -232,6 +237,7 @@
 (add-hook 'rust-mode-hook 'my-custom-build-bindings)
 (add-hook 'python-mode-hook 'my-custom-build-bindings)
 (add-hook 'go-mode-hook 'my-custom-build-bindings)
+(add-hook 'lua-mode-hook 'my-custom-build-bindings)
 
 ;;;; Section 3: IDE type features
 
