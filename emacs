@@ -28,6 +28,7 @@
                      scala-mode
                      ensime
                      yaml-mode
+                     helm
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -130,8 +131,7 @@
 
 ; Customize some shortcuts
 (define-key global-map (kbd "C-c e") 'eval-buffer)
-(define-key global-map (kbd "C-c r") 'query-replace-regexp)
-(define-key global-map (kbd "C-c h") 'query-replace)
+
 
 ;;;; Section 2: Programming language options
 
@@ -241,26 +241,52 @@
 
 ;;;; Section 3: IDE type features
 
-; general auto complete features
-(require 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
+(require 'helm)
+(require 'helm-config)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
 
-; Enable auto-complete-c-headers for c, c++
-(defun my-c-autocomplete-hooks()
-  (require 'auto-complete-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-  (add-to-list 'achead:include-directories '"/usr/include")
-  (loop for incdir in (file-expand-wildcards "/usr/include/c++/*")
-        do
-        (add-to-list 'achead:include-directories incdir))
-  (loop for incdir in (file-expand-wildcards "/usr/lib/gcc/*/*/include")
-        do
-        (add-to-list 'achead:include-directories incdir))
-  )
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
 
-(add-hook 'c++-mode-hook 'my-c-autocomplete-hooks)
-(add-hook 'c-mode-hook 'my-c-autocomplete-hooks)
+(set-face-attribute 'helm-source-header
+                    nil
+                    :foreground "White"
+                    :background nil
+                    :box nil
+                    :height 0.8)
+
+(set-face-attribute 'helm-selection
+                    nil
+                    :foreground "Black"
+                    :background "White"
+                    )
+
+(helm-autoresize-mode 1)
+(helm-mode 1)
+(global-set-key (kbd "\C-x\C-f") 'helm-find-files)
+
+;; ; general auto complete features
+;; (require 'auto-complete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+
+;; ; Enable auto-complete-c-headers for c, c++
+;; (defun my-c-autocomplete-hooks()
+;;   (require 'auto-complete-c-headers)
+;;   (add-to-list 'ac-sources 'ac-source-c-headers)
+;;   (add-to-list 'achead:include-directories '"/usr/include")
+;;   (loop for incdir in (file-expand-wildcards "/usr/include/c++/*")
+;;         do
+;;         (add-to-list 'achead:include-directories incdir))
+;;   (loop for incdir in (file-expand-wildcards "/usr/lib/gcc/*/*/include")
+;;         do
+;;         (add-to-list 'achead:include-directories incdir))
+;;   )
+
+;; (add-hook 'c++-mode-hook 'my-c-autocomplete-hooks)
+;; (add-hook 'c-mode-hook 'my-c-autocomplete-hooks)
 
 ; Refactoring features
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
@@ -317,6 +343,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(helm-ff-directory ((t (:background "black" :foreground "deep sky blue"))))
+ '(helm-ff-dotted-symlink-directory ((t (:background "black" :foreground "DarkOrange"))))
+ '(helm-ff-file ((t (:inherit font-lock-builtin-face :foreground "white"))))
  '(mode-line ((t (:foreground "Red"))))
  '(mode-line-buffer-id ((t (:weight bold))))
  '(mode-line-inactive ((t (:foreground "DarkRed"))))
@@ -325,4 +354,5 @@
  '(which-func ((t (:foreground "gold")))))
 
 (require 'spaceline-config)
+(spaceline-helm-mode 1)
 (spaceline-spacemacs-theme)
