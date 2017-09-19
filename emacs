@@ -356,3 +356,4 @@
 (require 'spaceline-config)
 (spaceline-helm-mode 1)
 (spaceline-spacemacs-theme)
+(put 'scroll-left 'disabled nil)

@@ -39,3 +39,7 @@
 [user]
   name = Pavan Yalamanchili
   email = contact@pavanky.com
+
+[core]
+  excludesfile = /home/pyalamanchili/.gitignore
+
