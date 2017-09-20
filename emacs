@@ -8,8 +8,6 @@
 (require 'package)
 
 (setq package-list '(
-                     auto-complete
-                     auto-complete-c-headers
                      iedit
                      markdown-mode
                      cmake-mode
@@ -29,6 +27,9 @@
                      ensime
                      yaml-mode
                      helm
+                     ggtags
+                     helm-gtags
+                     sr-speedbar
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -263,30 +264,70 @@
                     :background "White"
                     )
 
+(setq helm-autoresize-max-height 0)
+(setq helm-autoresize-min-height 20)
+
 (helm-autoresize-mode 1)
 (helm-mode 1)
-(global-set-key (kbd "\C-x\C-f") 'helm-find-files)
 
-;; ; general auto complete features
-;; (require 'auto-complete)
-;; (require 'auto-complete-config)
-;; (ac-config-default)
+(require 'cc-mode)
+(require 'semantic)
 
-;; ; Enable auto-complete-c-headers for c, c++
-;; (defun my-c-autocomplete-hooks()
-;;   (require 'auto-complete-c-headers)
-;;   (add-to-list 'ac-sources 'ac-source-c-headers)
-;;   (add-to-list 'achead:include-directories '"/usr/include")
-;;   (loop for incdir in (file-expand-wildcards "/usr/include/c++/*")
-;;         do
-;;         (add-to-list 'achead:include-directories incdir))
-;;   (loop for incdir in (file-expand-wildcards "/usr/lib/gcc/*/*/include")
-;;         do
-;;         (add-to-list 'achead:include-directories incdir))
-;;   )
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
 
-;; (add-hook 'c++-mode-hook 'my-c-autocomplete-hooks)
-;; (add-hook 'c-mode-hook 'my-c-autocomplete-hooks)
+(semantic-mode 1)
+
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x C-b") 'helm-multi-files)
+(global-set-key (kbd "C-c C-i") 'helm-semantic-or-imenu)
+(global-set-key (kbd "C-c C-SPC") 'helm-all-mark-rings)
+(global-set-key (kbd "C-c C-r") 'helm-regexp)
+(global-set-key (kbd "C-c C-v") 'helm-register)
+
+(setq
+ helm-buffers-fuzzy-matching t
+ helm-recentf-fuzzy-match t
+ helm-semantic-fuzzy-match t
+ helm-imenu-fuzzy-match t
+ helm-locate-fuzzy-match t
+ )
+
+(require 'ggtags)
+(add-hook
+ 'c-mode-common-hook
+ (lambda ()
+   (when (derived-mode-p
+          'c-mode
+          'c++-mode
+          'java-mode
+          'asm-mode)
+     (ggtags-mode 1))))
+
+(setq
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key "\C-c C-g"
+ helm-gtags-suggested-key-mapping t
+ )
+
+(require 'helm-gtags)
+;; Enable helm-gtags-mode
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+
+(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+
+(setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+
+;; file directory on sidebar
+(define-key global-map (kbd "C-c o")'sr-speedbar-toggle)
+(setq sr-speedbar-skip-other-window-p t)
 
 ; Refactoring features
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
@@ -304,6 +345,7 @@
 (define-key global-map (kbd "C-c C-<") 'mc/mark-all-like-this)
 (define-key global-map (kbd "C-M->") 'mc/unmark-next-like-this)
 (define-key global-map (kbd "C-M-<") 'mc/unmark-previous-like-this)
+
 
 ;;;; Section 4: Application modes
 
@@ -356,4 +398,3 @@
 (require 'spaceline-config)
 (spaceline-helm-mode 1)
 (spaceline-spacemacs-theme)
-(put 'scroll-left 'disabled nil)
