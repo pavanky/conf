@@ -30,6 +30,7 @@
                      ggtags
                      helm-gtags
                      sr-speedbar
+                     google-c-style
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -188,6 +189,7 @@
   (setq c++-basic-offset 4)
 )
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+(c-add-style  "Google" google-c-style)
 
 ; Tab width hook
 (defun my-tab-width-hook ()
