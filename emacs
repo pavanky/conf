@@ -174,6 +174,7 @@
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\rc$" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\gitconfig$" . conf-mode))
 
 ;; Custom hooks for various modes
 
