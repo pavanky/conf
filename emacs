@@ -27,6 +27,8 @@
                      helm
                      sr-speedbar
                      google-c-style
+                     ggtags
+                     helm-gtags
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -277,7 +279,7 @@
 (semantic-mode 1)
 
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x C-b") 'helm-multi-files)
+(global-set-key (kbd "C-x C-b") 'helm-mini)
 (global-set-key (kbd "C-c C-i") 'helm-semantic-or-imenu)
 (global-set-key (kbd "C-c C-SPC") 'helm-all-mark-rings)
 (global-set-key (kbd "C-c C-r") 'helm-regexp)
@@ -312,6 +314,54 @@
 (define-key global-map (kbd "C-M->") 'mc/unmark-next-like-this)
 (define-key global-map (kbd "C-M-<") 'mc/unmark-previous-like-this)
 
+(require 'ggtags)
+
+(define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
+(define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
+(define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+(define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+(define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+(define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+
+(define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+
+(setq
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key "\C-cg"
+ helm-gtags-suggested-key-mapping t
+ )
+
+(require 'helm-gtags)
+;; Enable helm-gtags-mode
+(add-hook 'c-mode-common-hook 'helm-gtags-mode)
+
+(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+(define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
+
+(setq
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key "\C-cg"
+ helm-gtags-suggested-key-mapping t
+ )
+
+(setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(setq company-backends (delete 'company-semantic company-backends))
+(define-key c-mode-map  [(tab)] 'company-complete)
+(define-key c++-mode-map  [(tab)] 'company-complete)
 
 ;;;; Section 4: Application modes
 
@@ -335,7 +385,7 @@
      '(custom-enabled-themes (quote (flatland-black)))
      '(custom-safe-themes
        (quote
-        ("9122dfb203945f6e84b0de66d11a97de6c9edf28b3b5db772472e4beccc6b3c5" default)))
+        ("4154caa8409ff2eb6f74c913741420e7103b9ea26c3c7d1a5a16592d0d2f43e0" "9122dfb203945f6e84b0de66d11a97de6c9edf28b3b5db772472e4beccc6b3c5" default)))
      )
   (
    ;; Load nothing in terminal mode
