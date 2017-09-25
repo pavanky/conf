@@ -130,6 +130,8 @@
 ; Customize some shortcuts
 (define-key global-map (kbd "C-c e") 'eval-buffer)
 
+; Navigate
+(windmove-default-keybindings 'meta)
 
 ;;;; Section 2: Programming language options
 
@@ -171,6 +173,7 @@
 ; Has to be below markdown-mode to override CMakeLists.txt to be cmake mode
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("\\rc$" . conf-mode))
 
 ;; Custom hooks for various modes
 
@@ -288,7 +291,7 @@
  )
 
 ;; file directory on sidebar
-(define-key global-map (kbd "C-c o")'sr-speedbar-toggle)
+(define-key global-map (kbd "C-c C-o")'sr-speedbar-toggle)
 (setq sr-speedbar-skip-other-window-p t)
 
 ; Refactoring features
