@@ -16,10 +16,8 @@
                      lua-mode
                      cuda-mode
                      opencl-mode
-                     ess
                      magit
                      multi-term
-                     jabber
                      flatland-black-theme
                      multiple-cursors
                      spaceline
@@ -27,8 +25,6 @@
                      ensime
                      yaml-mode
                      helm
-                     ggtags
-                     helm-gtags
                      sr-speedbar
                      google-c-style
                      ))
@@ -154,8 +150,6 @@
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
-(load "ess-site")
-
 ;; Bind major mode to file extensions
 (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh$" . cuda-mode))
@@ -214,7 +208,6 @@
 (add-hook 'f90-mode-hook 'my-whitespace-hook)
 (add-hook 'c-mode-common-hook 'my-whitespace-hook)
 (add-hook 'go-mode-hook 'my-whitespace-hook)
-(add-hook 'ess-mode-hook 'my-whitespace-hook)
 
 ; Compile and debug hooks
 (defun my-custom-build-bindings ()
@@ -235,7 +228,6 @@
 (add-hook 'sh-mode-hook 'my-custom-build-bindings)
 (add-hook 'makefile-mode-hook 'my-custom-build-bindings)
 (add-hook 'cmake-mode-hook 'my-custom-build-bindings)
-(add-hook 'ess-mode-hook 'my-custom-build-bindings)
 (add-hook 'markdown-mode-hook 'my-custom-build-bindings)
 (add-hook 'rust-mode-hook 'my-custom-build-bindings)
 (add-hook 'python-mode-hook 'my-custom-build-bindings)
@@ -295,38 +287,6 @@
  helm-locate-fuzzy-match t
  )
 
-(require 'ggtags)
-(add-hook
- 'c-mode-common-hook
- (lambda ()
-   (when (derived-mode-p
-          'c-mode
-          'c++-mode
-          'java-mode
-          'asm-mode)
-     (ggtags-mode 1))))
-
-(setq
- helm-gtags-ignore-case t
- helm-gtags-auto-update t
- helm-gtags-use-input-at-cursor t
- helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key "\C-c C-g"
- helm-gtags-suggested-key-mapping t
- )
-
-(require 'helm-gtags)
-;; Enable helm-gtags-mode
-(add-hook 'c-mode-hook 'helm-gtags-mode)
-(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-
-(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-
-(setq-local imenu-create-index-function #'ggtags-build-imenu-index)
-
 ;; file directory on sidebar
 (define-key global-map (kbd "C-c o")'sr-speedbar-toggle)
 (setq sr-speedbar-skip-other-window-p t)
@@ -350,9 +310,6 @@
 
 
 ;;;; Section 4: Application modes
-
-; Jabber mode
-(require 'jabber)
 
 ; multi term
 (require 'multi-term)
