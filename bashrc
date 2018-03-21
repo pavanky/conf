@@ -28,7 +28,7 @@ alias -- -='cd -'
 if [ -r /etc/issue ]; then
     if [ `grep Arch /etc/issue | wc -l` -gt 0 ]; then
         alias pacman='sudo pacman'
-    	alias pacaur='MAKEFLAGS=j4 pacaur --aur --noedit'
+        alias trizen='MAKEFLAGS=j4 trizen --aur --noedit'
     fi
 fi
 
