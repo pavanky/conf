@@ -29,6 +29,11 @@
                      google-c-style
                      ggtags
                      helm-gtags
+                     flycheck
+                     yasnippet
+                     irony
+                     company-irony
+                     flycheck-irony
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -314,17 +319,6 @@
 (define-key global-map (kbd "C-M->") 'mc/unmark-next-like-this)
 (define-key global-map (kbd "C-M-<") 'mc/unmark-previous-like-this)
 
-(require 'ggtags)
-
-(define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
-(define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
-(define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-(define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-(define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-(define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
-
-(define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
-
 (setq
  helm-gtags-ignore-case t
  helm-gtags-auto-update t
@@ -344,6 +338,7 @@
 (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
+(define-key helm-gtags-mode-map (kbd "C-c C-f") 'helm-gtags-find-files)
 
 (setq
  helm-gtags-ignore-case t
@@ -360,6 +355,16 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 (setq company-backends (delete 'company-semantic company-backends))
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony)
+  )
+(add-to-list 'company-backends 'company-c-headers)
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
 (define-key c-mode-map  [(tab)] 'company-complete)
 (define-key c++-mode-map  [(tab)] 'company-complete)
 
@@ -385,7 +390,7 @@
      '(custom-enabled-themes (quote (flatland-black)))
      '(custom-safe-themes
        (quote
-        ("4154caa8409ff2eb6f74c913741420e7103b9ea26c3c7d1a5a16592d0d2f43e0" "9122dfb203945f6e84b0de66d11a97de6c9edf28b3b5db772472e4beccc6b3c5" default)))
+        ("54449a089fc2f95f99ebc9b9b6067c802532fd50097cf44c46a53b4437d5c6cc" default)))
      )
   (
    ;; Load nothing in terminal mode
@@ -411,3 +416,11 @@
 (require 'spaceline-config)
 (spaceline-helm-mode 1)
 (spaceline-spacemacs-theme)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flycheck-irony company-irony irony flycheck yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode iedit helm-gtags google-c-style go-mode ggtags flatland-black-theme ensime cuda-mode cmake-mode))))
