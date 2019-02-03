@@ -3,6 +3,7 @@
   co = checkout
   di = diff
   st = status
+  stu = status -uno
   ann = annotate
   b = branch
   l = log --date-order --graph --pretty='%h %C(red)%an%Creset %s %C(yellow)%ar %C(green)%d%Creset'
