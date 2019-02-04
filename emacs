@@ -37,6 +37,8 @@
                      irony-eldoc
                      projectile
                      helm-projectile
+                     anaconda
+                     company-anaconda
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -379,6 +381,12 @@
 (add-hook 'c-mode-common-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
 
 (add-hook 'irony-mode-hook #'irony-eldoc)
+
+; Python IDE features
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(eval-after-load "company"
+ '(add-to-list 'company-backends 'company-anaconda))
 
 ;;;; Section 4: Application modes
 
