@@ -34,6 +34,9 @@
                      irony
                      company-irony
                      flycheck-irony
+                     irony-eldoc
+                     projectile
+                     helm-projectile
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -162,6 +165,7 @@
 ;; Bind major mode to file extensions
 (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh$" . cuda-mode))
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . opencl-mode))
 (add-to-list 'auto-mode-alist '("\\.clh$" . opencl-mode))
@@ -192,9 +196,12 @@
   (c-set-style "bsd")
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
+  (setq tab-always-indent 'complete)
 )
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 (c-add-style  "Google" google-c-style)
+'(safe-local-variable-values (quote ((c-basic-offset . 2))))
+'(safe-local-variable-values (quote ((c++-basic-offset . 2))))
 
 ; Tab width hook
 (defun my-tab-width-hook ()
@@ -274,6 +281,12 @@
 
 (helm-autoresize-mode 1)
 (helm-mode 1)
+
+(require 'projectile)
+(require 'helm-projectile)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
 
 (require 'cc-mode)
 (require 'semantic)
@@ -368,6 +381,14 @@
 (define-key c-mode-map  [(tab)] 'company-complete)
 (define-key c++-mode-map  [(tab)] 'company-complete)
 
+(global-flycheck-mode)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+(add-hook 'c-mode-common-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
+
+(add-hook 'irony-mode-hook #'irony-eldoc)
+
 ;;;; Section 4: Application modes
 
 ; multi term
@@ -423,4 +444,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck-irony company-irony irony flycheck yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode iedit helm-gtags google-c-style go-mode ggtags flatland-black-theme ensime cuda-mode cmake-mode))))
+    (helm-projectile flycheck-irony company-irony irony flycheck yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode iedit helm-gtags google-c-style go-mode ggtags flatland-black-theme ensime cuda-mode cmake-mode))))
