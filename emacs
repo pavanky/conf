@@ -321,7 +321,7 @@
 ; git
 (require 'magit)
 (define-key global-map (kbd "C-c G") 'magit-status)
-(add-hook 'after-save-hook 'magit-after-save-refresh-status)
+;(add-hook 'after-save-hook 'magit-after-save-refresh-status)
 
 ; multiple cursors
 (require 'multiple-cursors)
