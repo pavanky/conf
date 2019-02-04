@@ -332,15 +332,6 @@
 (define-key global-map (kbd "C-M->") 'mc/unmark-next-like-this)
 (define-key global-map (kbd "C-M-<") 'mc/unmark-previous-like-this)
 
-(setq
- helm-gtags-ignore-case t
- helm-gtags-auto-update t
- helm-gtags-use-input-at-cursor t
- helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key "\C-cg"
- helm-gtags-suggested-key-mapping t
- )
-
 (require 'helm-gtags)
 ;; Enable helm-gtags-mode
 (add-hook 'c-mode-common-hook 'helm-gtags-mode)
