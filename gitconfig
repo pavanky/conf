@@ -1,5 +1,7 @@
 [alias]
   ci = commit
+  ca = commit --amend
+  cae = commit --amend --no-edit
   co = checkout
   di = diff
   st = status
