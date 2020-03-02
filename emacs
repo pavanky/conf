@@ -5,8 +5,6 @@
 ;; Used the code mentioned here:
 ;; http://stackoverflow.com/a/10093312/2192361
 
-(require 'package)
-
 (setq package-list '(
                      iedit
                      markdown-mode
@@ -37,8 +35,12 @@
                      irony-eldoc
                      projectile
                      helm-projectile
-                     anaconda
+                     anaconda-mode
                      company-anaconda
+                     doom-themes
+                     doom-modeline
+                     indent-guide
+                     all-the-icons
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -286,7 +288,9 @@
 
 (require 'projectile)
 (require 'helm-projectile)
-(projectile-global-mode)
+
+(projectile-mode)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 
@@ -305,6 +309,7 @@
 (global-set-key (kbd "C-c C-r") 'helm-regexp)
 (global-set-key (kbd "C-c C-v") 'helm-register)
 
+
 (setq
  helm-buffers-fuzzy-matching t
  helm-recentf-fuzzy-match t
@@ -322,8 +327,13 @@
 
 ; git
 (require 'magit)
-(define-key global-map (kbd "C-c G") 'magit-status)
-;(add-hook 'after-save-hook 'magit-after-save-refresh-status)
+(define-key global-map (kbd "C-c g") 'magit-status)
+(define-key global-map (kbd "C-c f") 'magit-pull)
+(define-key global-map (kbd "C-c F") 'magit-fetch)
+(define-key global-map (kbd "C-c b") 'magit-branch-checkout)
+(define-key global-map (kbd "C-c r") 'magit-branch-rebase)
+(define-key global-map (kbd "C-c m") 'magit-branch-merge)
+(add-hook 'after-save-hook 'magit-after-save-refresh-status)
 
 ; multiple cursors
 (require 'multiple-cursors)
@@ -336,6 +346,10 @@
 
 (require 'helm-gtags)
 ;; Enable helm-gtags-mode
+
+;; global search gtags
+(setenv "GTAGSTHROUGH" "true")
+
 (add-hook 'c-mode-common-hook 'helm-gtags-mode)
 
 (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
@@ -377,7 +391,6 @@
 (global-flycheck-mode)
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
 (add-hook 'c-mode-common-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
 
 (add-hook 'irony-mode-hook #'irony-eldoc)
@@ -386,7 +399,7 @@
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 (eval-after-load "company"
- '(add-to-list 'company-backends 'company-anaconda))
+  '(add-to-list 'company-backends 'company-anaconda))
 
 ;;;; Section 4: Application modes
 
@@ -399,23 +412,29 @@
                       (get-buffer-process (current-buffer)) nil)))
 
 ;;;; Section 5: Themeing
+(require 'all-the-icons)
+(require 'doom-themes)
 
-;; Theme for the GUI
-(if (display-graphic-p)
-    (custom-set-variables
-     ;; custom-set-variables was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     '(custom-enabled-themes (quote (flatland-black)))
-     '(custom-safe-themes
-       (quote
-        ("54449a089fc2f95f99ebc9b9b6067c802532fd50097cf44c46a53b4437d5c6cc" default)))
-     )
-  (
-   ;; Load nothing in terminal mode
-   )
-  )
+(require 'indent-guide)
+(indent-guide-global-mode)
+;(set-face-background 'indent-guide-face "dimgray")
+
+;; Global settings (defaults)
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+;; Load the theme (doom-one, doom-molokai, etc); keep in mind that each
+;; theme may have their own settings.
+(load-theme 'doom-tomorrow-night t)
+
+;; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+
+;; Enable custom neotree theme
+(doom-themes-neotree-config)  ; all-the-icons fonts must be installed!
+
+(require 'doom-modeline)
+(doom-modeline-mode 1)
 
 ;; Customizing modeline colors
 (custom-set-faces
@@ -433,9 +452,6 @@
  '(term-color-blue ((t (:background "magenta" :foreground "dark violet"))))
  '(which-func ((t (:foreground "gold")))))
 
-(require 'spaceline-config)
-(spaceline-helm-mode 1)
-(spaceline-spacemacs-theme)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
