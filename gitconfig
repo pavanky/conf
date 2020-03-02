@@ -2,6 +2,7 @@
   ci = commit
   ca = commit --amend
   cae = commit --amend --no-edit
+  au = add -u
   co = checkout
   di = diff
   st = status

@@ -12,7 +12,7 @@ create()
     do
         cp ~/.$cfg $backup_dir/$cfg 2>/dev/null
         rm -f ~/.$cfg
-        ln $root_dir/$cfg ~/.$cfg
+        ln -s $root_dir/$cfg ~/.$cfg
     done
 }
 

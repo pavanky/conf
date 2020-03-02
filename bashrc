@@ -77,3 +77,8 @@ if [ -r ~/.ps1 ]; then . ~/.ps1; fi
 
 # Machine specific config
 if [ -r ~/.bashrc_local ]; then . ~/.bashrc_local; fi
+
+# dottools: add distribution binary directories to PATH
+if [ -r "$HOME/.tools-cache/setup-dottools-path.sh" ]; then
+  . "$HOME/.tools-cache/setup-dottools-path.sh"
+fi
