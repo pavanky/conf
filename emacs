@@ -20,7 +20,6 @@
                      multiple-cursors
                      spaceline
                      scala-mode
-                     ensime
                      yaml-mode
                      helm
                      sr-speedbar
@@ -155,7 +154,6 @@
 
 (require 'cmake-mode)
 (require 'opencl-mode)
-(require 'ensime)
 (require 'yaml-mode)
 
 (autoload 'go-mode "go-mode" "Major mode for editing go language files" t)
@@ -459,4 +457,10 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm-projectile flycheck-irony company-irony irony flycheck yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode iedit helm-gtags google-c-style go-mode ggtags flatland-black-theme ensime cuda-mode cmake-mode))))
+    (yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode irony-eldoc indent-guide iedit helm-projectile helm-gtags google-c-style go-mode ggtags flycheck-irony flatland-black-theme doom-themes doom-modeline cuda-mode company-irony company-anaconda cmake-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
