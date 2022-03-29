@@ -19,7 +19,6 @@
                      flatland-black-theme
                      multiple-cursors
                      spaceline
-                     scala-mode
                      yaml-mode
                      helm
                      sr-speedbar
@@ -40,6 +39,8 @@
                      doom-modeline
                      indent-guide
                      all-the-icons
+                     use-package
+                     pyenv-mode
                      ))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -56,6 +57,8 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+(server-start)
+;;(setq server-socket-dir "~/.emacs.d/server")
 
 ;;;; Section 1: Configuring emacs options
 
@@ -137,6 +140,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ; Delete trailing whitespace before save
 
 (savehist-mode 1)
+(desktop-save-mode 1)
 (setq savehist-file "~/.emacs.d/history") ; Define history location
 (setq tramp-histfile-override "~/.emacs.d/tramp_history")
 
@@ -331,7 +335,7 @@
 (define-key global-map (kbd "C-c b") 'magit-branch-checkout)
 (define-key global-map (kbd "C-c r") 'magit-branch-rebase)
 (define-key global-map (kbd "C-c m") 'magit-branch-merge)
-(add-hook 'after-save-hook 'magit-after-save-refresh-status)
+;(add-hook 'after-save-hook 'magit-after-save-refresh-status)
 
 ; multiple cursors
 (require 'multiple-cursors)
@@ -399,11 +403,94 @@
 (eval-after-load "company"
   '(add-to-list 'company-backends 'company-anaconda))
 
+(pyenv-mode)
+(when (executable-find "ipython")
+  (setq python-shell-interpreter "ipython"))
+
+;; Scala IDE features
+
+;; Install use-package if not already installed
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
+
+;; Enable defer and ensure by default for use-package
+;; Keep auto-save/backup files separate from source code:  https://github.com/scalameta/metals/issues/1027
+(setq use-package-always-defer t
+      use-package-always-ensure t
+      backup-directory-alist `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+
+;; Enable scala-mode for highlighting, indentation and motion commands
+(use-package scala-mode
+  :mode "\\.s\\(cala\\|bt\\)$")
+
+(add-hook 'scala-mode-hook 'my-custom-build-bindings)
+
+
+;; Enable sbt mode for executing sbt commands
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config
+  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+  ;; allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false"))
+)
+
+;; Enable nice rendering of diagnostics like compile errors.
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package lsp-mode
+  ;; Optional - enable lsp-mode automatically in scala files
+  :hook  (scala-mode . lsp)
+         (lsp-mode . lsp-lens-mode)
+         :config (setq lsp-prefer-flymake nil))
+
+;; (use-package lsp-java)
+;; (use-package lsp-scala)
+
+;; Enable nice rendering of documentation on hover
+(use-package lsp-ui)
+
+;; lsp-mode supports snippets, but in order for them to work you need to use yasnippet
+;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
+;;   to avoid odd behavior with snippets and indentation
+(use-package yasnippet)
+
+;; Add company-lsp backend for metals
+(use-package company-lsp)
+
+;; Use the Debug Adapter Protocol for running tests and debugging
+(use-package posframe
+  ;; Posframe is a pop-up tool that must be manually installed for dap-mode
+  )
+(use-package dap-mode
+  :hook
+  (lsp-mode . dap-mode)
+  (lsp-mode . dap-ui-mode)
+  )
+
+;; Use the Tree View Protocol for viewing the project structure and triggering compilation
+(use-package lsp-treemacs
+  :config
+  (lsp-metals-treeview-enable t)
+  (setq lsp-metals-treeview-show-when-views-received t)
+  )
+
 ;;;; Section 4: Application modes
 
 ; multi term
 (require 'multi-term)
 (define-key global-map (kbd "C-c m") 'multi-term-dedicated-toggle)
+(define-key global-map (kbd "C-c t") 'multi-term)
 (setq multi-term-dedicated-select-after-open-p t)
 (add-hook 'term-exec-hook
           (lambda () (set-process-query-on-exit-flag
@@ -434,12 +521,16 @@
 (require 'doom-modeline)
 (doom-modeline-mode 1)
 
+;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
+(set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
+
 ;; Customizing modeline colors
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight normal :height 139 :width normal))))
  '(helm-ff-directory ((t (:background "black" :foreground "deep sky blue"))))
  '(helm-ff-dotted-symlink-directory ((t (:background "black" :foreground "DarkOrange"))))
  '(helm-ff-file ((t (:inherit font-lock-builtin-face :foreground "white"))))
@@ -455,12 +546,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode irony-eldoc indent-guide iedit helm-projectile helm-gtags google-c-style go-mode ggtags flycheck-irony flatland-black-theme doom-themes doom-modeline cuda-mode company-irony company-anaconda cmake-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+    (pyenv-mode lsp-scala lsp-java lsp-treemacs dap-mode posframe company-lsp lsp-ui use-package lsp-mode yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode irony-eldoc indent-guide iedit helm-projectile helm-gtags google-c-style go-mode ggtags flycheck-irony flatland-black-theme doom-themes doom-modeline cuda-mode company-irony company-anaconda cmake-mode)))
+ '(tool-bar-mode nil))

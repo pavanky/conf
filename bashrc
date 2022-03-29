@@ -42,7 +42,8 @@ calc() { echo "$@" | bc -l; }
 note() { echo "$@" >> ~/Documents/notes; }
 
 # Editors
-export EDITOR='emacs -nw'
+export EDITOR='vim' #'emacsclient -tty --socket-name /tmp/emacs1000/server'
+export ALTERNATE_EDITOR='vim'
 export SVN_EDITOR=EDITOR
 
 # Paths

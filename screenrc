@@ -10,7 +10,6 @@ hardstatus alwayslastline
 hardstatus string '%{=}%-w%{.r}%n %t%{-}%+w %=%{g} %H %{y} %d %M %C%a'
 term xterm
 
-screen -t emacs   0 emacs -nw
-screen -t console 1
-screen -t htop    2 nice -20 htop -d 30
+screen -t console 0
+screen -t htop    1 nice -20 htop -d 30
 shelltitle bash
