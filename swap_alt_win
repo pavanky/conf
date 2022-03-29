@@ -8,11 +8,9 @@ import json
 ALTWIN_OPTION = "altwin:swap_alt_win"
 
 def cmd(option, args):
-    c = f"gsettings {option} org.gnome.desktop.input-sources xkb-options {args}"
-    print(c)
-    return c
+    return f"gsettings {option} org.gnome.desktop.input-sources xkb-options {args}"
 
-def swap(existing_values):            
+def toggle(existing_values):
     if ALTWIN_OPTION in existing_values:
         existing_values.remove(ALTWIN_OPTION)
     else:
@@ -23,26 +21,24 @@ def on(existing_values):
     if ALTWIN_OPTION not in existing_values:
         existing_values.append(ALTWIN_OPTION)
     return existing_values
-    
+
 def off(existing_values):
     if ALTWIN_OPTION in existing_values:
         existing_values.remove(ALTWIN_OPTION)
     return existing_values
-    
+
 if __name__ == "__main__":
 
     output = subprocess.run(cmd("get", ""), shell=True, capture_output=True)
     existing_values = json.loads(output.stdout.decode().replace('\'', '"'))
-    
-    if len(sys.argv) == 1 or sys.argv[1] == "swap":
-        updated_values = swap(existing_values)
+
+    if len(sys.argv) == 1 or sys.argv[1] == "toggle":
+        updated_values = toggle(existing_values)
     elif sys.argv[1] == "on":
-        updated_values = swap(existing_values)
+        updated_values = on(existing_values)
     elif sys.argv[1] == "off":
-        updated_values = swap(existing_values)
+        updated_values = off(existing_values)
     else:
         raise ValueError(f"Unsupported argument {sys.argv}")
-        
+
     subprocess.run(cmd("set", f"\"{updated_values}\""), shell=True)
-
-
