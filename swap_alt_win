@@ -3,6 +3,7 @@
 import subprocess
 import sys
 import json
+import argparse
 
 
 ALTWIN_OPTION = "altwin:swap_alt_win"
@@ -27,18 +28,36 @@ def off(existing_values):
         existing_values.remove(ALTWIN_OPTION)
     return existing_values
 
-if __name__ == "__main__":
+def status(existing_values):
+    if ALTWIN_OPTION in existing_values:
+        print("swap_alt_win: on")
+    else:
+        print("swap_alt_win: off")
 
+def run(args):
     output = subprocess.run(cmd("get", ""), shell=True, capture_output=True)
     existing_values = json.loads(output.stdout.decode().replace('\'', '"'))
 
-    if len(sys.argv) == 1 or sys.argv[1] == "toggle":
+    if args.altwin == "status":
+        status(existing_values)
+        return
+
+    if args.altwin == "toggle":
         updated_values = toggle(existing_values)
-    elif sys.argv[1] == "on":
+    elif args.altwin == "on":
         updated_values = on(existing_values)
-    elif sys.argv[1] == "off":
+    elif args.altwin == "off":
         updated_values = off(existing_values)
     else:
         raise ValueError(f"Unsupported argument {sys.argv}")
 
     subprocess.run(cmd("set", f"\"{updated_values}\""), shell=True)
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('--altwin', type=str, default="toggle", help="Argument for altwin setting")
+    parser.add_argument('--verbose', action='store_true', help="Show verbose results")
+    args = parser.parse_args()
+
+    run(args)
