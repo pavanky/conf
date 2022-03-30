@@ -8,8 +8,14 @@ import argparse
 
 ALTWIN_OPTION = "altwin:swap_alt_win"
 
-def cmd(option, args):
+def xgb_options_cmd(option, args):
     return f"gsettings {option} org.gnome.desktop.input-sources xkb-options {args}"
+
+def xgb_options_get():
+    return xgb_options_cmd("get", "")
+
+def xgb_options_set(args):
+    return xgb_options_cmd("set", f"\"{args}\"")
 
 def toggle(existing_values):
     if ALTWIN_OPTION in existing_values:
@@ -35,7 +41,7 @@ def status(existing_values):
         print("swap_alt_win: off")
 
 def run(args):
-    output = subprocess.run(cmd("get", ""), shell=True, capture_output=True)
+    output = subprocess.run(xgb_options_get(), shell=True, capture_output=True)
     existing_values = json.loads(output.stdout.decode().replace('\'', '"'))
 
     if args.altwin == "status":
@@ -51,7 +57,7 @@ def run(args):
     else:
         raise ValueError(f"Unsupported argument {sys.argv}")
 
-    subprocess.run(cmd("set", f"\"{updated_values}\""), shell=True)
+    subprocess.run(xgb_options_set(updated_values), shell=True)
 
 if __name__ == "__main__":
 
