@@ -157,8 +157,35 @@
   "Major mode for editing Markdown files" t)
 
 (require 'cmake-mode)
+(require 'cuda-mode)
 (require 'opencl-mode)
 (require 'yaml-mode)
+
+
+; Compile and debug hooks
+(defun my-custom-build-bindings ()
+  "My custom bindings."
+  (local-set-key "\C-c\C-c" 'compile)
+  (local-set-key "\C-cc" 'comment-region)
+  (local-set-key "\C-x\C-n" 'next-error)
+  (local-set-key "\C-x\C-p" 'previous-error)
+  )
+
+(add-hook 'c-mode-hook 'my-custom-build-bindings)
+(add-hook 'c++-mode-hook 'my-custom-build-bindings)
+(add-hook 'cuda-mode-hook 'my-custom-build-bindings)
+(add-hook 'opencl-mode-hook 'my-custom-build-bindings)
+(add-hook 'java-mode-hook 'my-custom-build-bindings)
+(add-hook 'f90-mode-hook 'my-custom-build-bindings)
+(add-hook 'emacs-lisp-mode-hook 'my-custom-build-bindings)
+(add-hook 'sh-mode-hook 'my-custom-build-bindings)
+(add-hook 'makefile-mode-hook 'my-custom-build-bindings)
+(add-hook 'cmake-mode-hook 'my-custom-build-bindings)
+(add-hook 'markdown-mode-hook 'my-custom-build-bindings)
+(add-hook 'rust-mode-hook 'my-custom-build-bindings)
+(add-hook 'python-mode-hook 'my-custom-build-bindings)
+(add-hook 'go-mode-hook 'my-custom-build-bindings)
+(add-hook 'lua-mode-hook 'my-custom-build-bindings)
 
 (autoload 'go-mode "go-mode" "Major mode for editing go language files" t)
 (add-hook 'before-save-hook #'gofmt-before-save)
@@ -232,31 +259,6 @@
 (add-hook 'f90-mode-hook 'my-whitespace-hook)
 (add-hook 'c-mode-common-hook 'my-whitespace-hook)
 (add-hook 'go-mode-hook 'my-whitespace-hook)
-
-; Compile and debug hooks
-(defun my-custom-build-bindings ()
-  "My custom bindings."
-  (local-set-key "\C-c\C-c" 'compile)
-  (local-set-key "\C-cc" 'comment-region)
-  (local-set-key "\C-x\C-n" 'next-error)
-  (local-set-key "\C-x\C-p" 'previous-error)
-  )
-
-(add-hook 'c-mode-hook 'my-custom-build-bindings)
-(add-hook 'c++-mode-hook 'my-custom-build-bindings)
-(add-hook 'cuda-mode-hook 'my-custom-build-bindings)
-(add-hook 'opencl-mode-hook 'my-custom-build-bindings)
-(add-hook 'java-mode-hook 'my-custom-build-bindings)
-(add-hook 'f90-mode-hook 'my-custom-build-bindings)
-(add-hook 'emacs-lisp-mode-hook 'my-custom-build-bindings)
-(add-hook 'sh-mode-hook 'my-custom-build-bindings)
-(add-hook 'makefile-mode-hook 'my-custom-build-bindings)
-(add-hook 'cmake-mode-hook 'my-custom-build-bindings)
-(add-hook 'markdown-mode-hook 'my-custom-build-bindings)
-(add-hook 'rust-mode-hook 'my-custom-build-bindings)
-(add-hook 'python-mode-hook 'my-custom-build-bindings)
-(add-hook 'go-mode-hook 'my-custom-build-bindings)
-(add-hook 'lua-mode-hook 'my-custom-build-bindings)
 
 ;;;; Section 3: IDE type features
 
@@ -466,7 +468,7 @@
 (use-package yasnippet)
 
 ;; Add company-lsp backend for metals
-(use-package company-lsp)
+;; (use-package company-lsp)
 
 ;; Use the Debug Adapter Protocol for running tests and debugging
 (use-package posframe
@@ -548,6 +550,5 @@
  ;; If there is more than one, they won't work right.
  '(menu-bar-mode nil)
  '(package-selected-packages
-   (quote
-    (pyenv-mode lsp-scala lsp-java lsp-treemacs dap-mode posframe company-lsp lsp-ui use-package lsp-mode yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode irony-eldoc indent-guide iedit helm-projectile helm-gtags google-c-style go-mode ggtags flycheck-irony flatland-black-theme doom-themes doom-modeline cuda-mode company-irony company-anaconda cmake-mode)))
+   '(pyenv-mode lsp-scala lsp-java lsp-treemacs dap-mode posframe lsp-ui use-package lsp-mode yaml-mode sr-speedbar spaceline rust-mode opencl-mode multiple-cursors multi-term markdown-mode magit lua-mode irony-eldoc indent-guide iedit helm-projectile helm-gtags google-c-style go-mode ggtags flycheck-irony flatland-black-theme doom-themes doom-modeline cuda-mode company-irony company-anaconda cmake-mode))
  '(tool-bar-mode nil))

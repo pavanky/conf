@@ -12,14 +12,12 @@ create()
     do
         cp ~/.$cfg $backup_dir/$cfg 2>/dev/null
         rm -f ~/.$cfg
+        mkdir -p $(dirname ~/.$cfg)
         ln -s $root_dir/$cfg ~/.$cfg
     done
 }
 
 # use this instead of readlink to make it not dependent on linux
 root_dir=`echo $(cd $(dirname "$1") && pwd -P)/$(basename "$1")`
-
-mkdir -p ~/.i3
-
 # Create symbolic links from config files
-create $root_dir bashrc screenrc ps1 gitconfig emacs i3/config
+create $root_dir bashrc screenrc ps1 gitconfig i3/config emacs.d/init.el
